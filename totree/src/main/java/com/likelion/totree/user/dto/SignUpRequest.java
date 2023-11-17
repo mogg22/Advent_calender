@@ -37,6 +37,7 @@ public class SignUpRequest {
                 .password(encodedPassword)
                 .receiver(receiver)
                 .role(role)
+                .ticket(0)
                 .build();
     }
 }

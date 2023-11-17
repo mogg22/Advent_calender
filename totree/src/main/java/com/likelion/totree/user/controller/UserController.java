@@ -92,4 +92,5 @@ public class UserController {
         UserResponse user = UserResponse.of(userDetails.getUser());
         return jwtProvider.reissueAtk(user.getNickname(), user.getRole(), tokenRequest.getRefreshToken());
     }
+
 }

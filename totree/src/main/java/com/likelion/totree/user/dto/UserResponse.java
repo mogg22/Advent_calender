@@ -5,6 +5,8 @@ import com.likelion.totree.user.entity.UserRoleEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @NoArgsConstructor(force = true)
 public class UserResponse {
@@ -12,6 +14,9 @@ public class UserResponse {
     private final String nickname;
     private final String receiver;
     private final UserRoleEnum role;
+
+    private final int[] ornament;
+    private final int ticket;
 
     /**
      *  유저 생성자를 private로 외부에서 생성 할수 없도록 함
@@ -21,6 +26,8 @@ public class UserResponse {
         this.nickname = user.getNickname();
         this.receiver = user.getReceiver();
         this.role = user.getRole();
+        this.ornament=user.getOrnament();
+        this.ticket=user.getTicket();
     }
 
     /**
