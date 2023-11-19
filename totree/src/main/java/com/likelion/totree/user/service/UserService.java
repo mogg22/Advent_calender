@@ -4,6 +4,7 @@ import com.likelion.totree.redis.CacheNames;
 import com.likelion.totree.redis.RedisDao;
 import com.likelion.totree.security.exception.AlreadyExistsError;
 import com.likelion.totree.security.exception.DifferentDateError;
+import com.likelion.totree.security.exception.NoTicketError;
 import com.likelion.totree.security.jwt.JwtProvider;
 import com.likelion.totree.user.dto.LoginRequest;
 import com.likelion.totree.user.dto.PostResponse;
@@ -112,6 +113,14 @@ public class UserService {
     }
 
     @Transactional
+    public UserResponse getTicket(String nickname) {
+        User user = userRepository.findByNickname(nickname).orElseThrow(
+                () -> new RuntimeException("닉네임 " + nickname + "인 사용자를 찾을 수 없습니다."));
+        user.ticketUp();
+        return UserResponse.of(user);
+    }
+
+    @Transactional
     public ResponseEntity savePost(String nickname, String content, int date) throws DifferentDateError, AlreadyExistsError{
         User user = userRepository.findByNickname(nickname).orElseThrow(
                 () -> new RuntimeException("해당 닉네임을 가진 사용자를 찾을 수 없습니다.")
@@ -119,7 +128,7 @@ public class UserService {
 
         LocalDate currentDate = LocalDate.now();
         if (currentDate.getDayOfMonth() != date) {
-            throw new DifferentDateError();
+            throw new DifferentDateError("오늘이 아닙니다");
         }
         Optional<Post> existingPost = postRepository.findByDate(date);
 
@@ -137,6 +146,37 @@ public class UserService {
         userRepository.save(user);
 
         return ResponseEntity.ok("글이 성공적으로 저장되었습니다.");
+    }
+
+    @Transactional
+    public ResponseEntity saveTicketPost(String nickname, String content, int date) throws DifferentDateError, AlreadyExistsError,NoTicketError{
+        User user = userRepository.findByNickname(nickname).orElseThrow(
+                () -> new RuntimeException("해당 닉네임을 가진 사용자를 찾을 수 없습니다.")
+        );
+        if(user.getTicket()<=0){
+            throw new NoTicketError();
+        }
+
+        LocalDate currentDate = LocalDate.now();
+        if (currentDate.getDayOfMonth() <= date) {
+            throw new DifferentDateError("현재 날짜보다 이전이어야 합니다");
+        }
+        Optional<Post> existingPost = postRepository.findByDate(date);
+
+        if (existingPost.isPresent()) {
+            throw new AlreadyExistsError();
+        }
+        user.ticketDown();
+        Post post = Post.builder()
+                .content(content)
+                .user(user)
+                .date(date)
+                .build();
+
+        user.addPost(post);
+        userRepository.save(user);
+
+        return ResponseEntity.ok("이용권을 사용하여 글이 성공적으로 저장되었습니다.");
     }
 
     @Transactional(readOnly = true)

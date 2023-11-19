@@ -3,6 +3,7 @@ package com.likelion.totree.user.controller;
 import com.likelion.totree.security.dto.TokenResponse;
 import com.likelion.totree.security.exception.AlreadyExistsError;
 import com.likelion.totree.security.exception.DifferentDateError;
+import com.likelion.totree.security.exception.NoTicketError;
 import com.likelion.totree.security.jwt.JwtProvider;
 import com.likelion.totree.security.service.UserDetailsImpl;
 import com.likelion.totree.user.dto.*;
@@ -85,6 +86,11 @@ public class UserController {
         return userService.getUserInfo(userDetails.getUsername());  // username = nickname
     }
 
+    @GetMapping("/get-ticket")
+    public UserResponse getTicket(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return userService.getTicket(userDetails.getUsername());  // username = nickname
+    }
+
     /**
      *  AccessToken  재발급
      * 매 API 호출 시 시큐리티필터를 통해 인증인가를 받게  된다. 이때 만료된 토큰인지 검증하고 만료시 만료된토큰임을 에러메세지로 보낸다.
@@ -119,6 +125,32 @@ public class UserController {
         }catch (DifferentDateError e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 
+        }catch(NoTicketError e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+
+    }
+
+    @PostMapping("/ticket/post/{date}")
+    public ResponseEntity<String> ticketSavePost(
+            @PathVariable int date,
+            @RequestBody Map<String, String> requestBody,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+        LocalDate currentDate = LocalDate.now();
+        String content = requestBody.get("content");
+
+
+        try{
+            userService.saveTicketPost(userDetails.getUsername(), content, date);
+            return ResponseEntity.ok("이용권을 사용하여 글이 성공적으로 저장되었습니다.");
+        }catch(AlreadyExistsError e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }catch (DifferentDateError e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+
+        }catch(NoTicketError e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
 
     }
