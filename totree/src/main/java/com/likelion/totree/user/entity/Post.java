@@ -23,9 +23,12 @@ public class Post {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    private int date;
+
     @Builder
-    public Post(String content, User user) {
+    public Post(String content, User user, int date) {
         this.content = content;
         this.user = user;
+        this.date=date;
     }
 }
