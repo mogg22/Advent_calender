@@ -41,13 +41,8 @@ public class User {
 
     private Boolean inUser;  // 추후 휴면계정 관리 시 사용
 
-    /*@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Post> posts = new ArrayList<>();*/
-
-    // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    // private List<Post> posts = new ArrayList<>();
-
-
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> posts = new ArrayList<>();
 
     @Builder
     public User(String nickname, String password, String receiver, UserRoleEnum role, int ticket) {
@@ -57,6 +52,7 @@ public class User {
         this.role = role;
         this.ornament =  getArray();
         this.ticket=ticket;
+        this.posts = new ArrayList<>();
     }
 
     private int[] getArray() {
@@ -71,5 +67,10 @@ public class User {
 
 
         return shuffledArray;
+    }
+
+    public void addPost(Post post) {
+        this.posts.add(post);
+        post.setUser(this);
     }
 }

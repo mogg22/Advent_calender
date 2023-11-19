@@ -4,8 +4,10 @@ import com.likelion.totree.redis.CacheNames;
 import com.likelion.totree.redis.RedisDao;
 import com.likelion.totree.security.jwt.JwtProvider;
 import com.likelion.totree.user.dto.LoginRequest;
+import com.likelion.totree.user.dto.PostResponse;
 import com.likelion.totree.user.dto.SignUpRequest;
 import com.likelion.totree.user.dto.UserResponse;
+import com.likelion.totree.user.entity.Post;
 import com.likelion.totree.user.entity.User;
 import com.likelion.totree.user.entity.UserRoleEnum;
 import com.likelion.totree.user.repository.UserRepository;
@@ -18,7 +20,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -97,5 +101,36 @@ public class UserService {
         User user = userRepository.findByNickname(nickname).orElseThrow(
                 () -> new RuntimeException("닉네임 " + nickname + "인 사용자를 찾을 수 없습니다."));
         return UserResponse.of(user);
+    }
+
+    @Transactional
+    public ResponseEntity savePost(String nickname, String content) {
+        User user = userRepository.findByNickname(nickname).orElseThrow(
+                () -> new RuntimeException("해당 닉네임을 가진 사용자를 찾을 수 없습니다.")
+        );
+
+        Post post = Post.builder()
+                .content(content)
+                .user(user)
+                .build();
+
+        user.addPost(post);
+        userRepository.save(user);
+
+        return ResponseEntity.ok("글이 성공적으로 저장되었습니다.");
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostResponse> getUserPosts(String nickname) {
+        User user = userRepository.findByNickname(nickname).orElseThrow(
+                () -> new RuntimeException("해당 닉네임을 가진 사용자를 찾을 수 없습니다.")
+        );
+
+        List<Post> userPosts = user.getPosts();
+        List<PostResponse> postResponses = userPosts.stream()
+                .map(PostResponse::of)
+                .collect(Collectors.toList());
+
+        return postResponses;
     }
 }
