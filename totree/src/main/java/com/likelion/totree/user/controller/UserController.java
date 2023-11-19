@@ -1,6 +1,8 @@
 package com.likelion.totree.user.controller;
 
 import com.likelion.totree.security.dto.TokenResponse;
+import com.likelion.totree.security.exception.AlreadyExistsError;
+import com.likelion.totree.security.exception.DifferentDateError;
 import com.likelion.totree.security.jwt.JwtProvider;
 import com.likelion.totree.security.service.UserDetailsImpl;
 import com.likelion.totree.user.dto.*;
@@ -9,6 +11,7 @@ import com.likelion.totree.user.entity.User;
 import com.likelion.totree.user.repository.PostRepository;
 import com.likelion.totree.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -97,13 +101,28 @@ public class UserController {
         return jwtProvider.reissueAtk(user.getNickname(), user.getRole(), tokenRequest.getRefreshToken());
     }
 
-    @PostMapping("/post")
-    public ResponseEntity savePost(@RequestBody Map<String, String> requestBody, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        String content = requestBody.get("content");
-        userService.savePost(userDetails.getUsername(), content);
+    @PostMapping("/post/{date}")
+    public ResponseEntity<String> savePost(
+            @PathVariable int date,
+            @RequestBody Map<String, String> requestBody,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
-        return ResponseEntity.ok("글이 성공적으로 저장되었습니다.");
+        LocalDate currentDate = LocalDate.now();
+        String content = requestBody.get("content");
+
+
+        try{
+            userService.savePost(userDetails.getUsername(), content, date);
+            return ResponseEntity.ok("글이 성공적으로 저장되었습니다.");
+        }catch(AlreadyExistsError e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }catch (DifferentDateError e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+
+        }
+
     }
+
 
     @GetMapping("/readposts")
     public ResponseEntity<List<PostResponse>> getUserPosts(@AuthenticationPrincipal UserDetailsImpl userDetails) {
