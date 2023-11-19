@@ -73,4 +73,8 @@ public class User {
         this.posts.add(post);
         post.setUser(this);
     }
+
+    public void setReceiver(String newReceiver) {
+        this.receiver = newReceiver;
+    }
 }

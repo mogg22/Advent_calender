@@ -12,7 +12,7 @@ import java.util.List;
 public class UserResponse {
 
     private final String nickname;
-    private final String receiver;
+    private String receiver;
     private final UserRoleEnum role;
 
     private final int[] ornament;
