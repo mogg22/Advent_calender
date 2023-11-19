@@ -133,4 +133,16 @@ public class UserService {
 
         return postResponses;
     }
+
+    @Transactional
+    public ResponseEntity updateReceiver(String nickname, String newReceiver) {
+        User user = userRepository.findByNickname(nickname).orElseThrow(
+                () -> new RuntimeException("해당 닉네임을 가진 사용자를 찾을 수 없습니다.")
+        );
+
+        user.setReceiver(newReceiver);
+        userRepository.save(user);
+
+        return ResponseEntity.ok("Receiver 정보 업데이트");
+    }
 }

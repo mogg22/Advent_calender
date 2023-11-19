@@ -112,4 +112,12 @@ public class UserController {
         return ResponseEntity.ok(userPosts);
     }
 
+    @PatchMapping("/update-receiver")
+    public ResponseEntity updateReceiver(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                         @RequestBody Map<String, String> requestBody) {
+        String newReceiver = requestBody.get("newReceiver");
+        userService.updateReceiver(userDetails.getUsername(), newReceiver);
+        return ResponseEntity.ok("Receiver 정보 업데이트");
+    }
+
 }
