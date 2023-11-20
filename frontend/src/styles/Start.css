@@ -1,0 +1,33 @@
+.start-page {
+  background-color: #77514e;
+  width: 100vw;
+  height: 100vh;
+}
+
+.page-bg {
+  background-image: url("../img/background.png");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+}
+
+.center {
+  width: 390px;
+  height: 100vh;
+  background-color: rgb(255, 255, 255, 0.5);
+  display: flex;
+  justify-content: center;
+}
+
+.white-door {
+  width: 95%;
+  height: 85%;
+  position: relative;
+  top: calc(100vh * 0.15);
+
+  background-color: #f1f1ef;
+  border-radius: 200px 200px 0 0;
+}
