@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import MyPage from "./pages/MyPage";
 import Main from "./pages/Main";
 import Tree from "./pages/Tree";
+import Post from "./pages/Post";
 
 import "./styles/App.css";
 
@@ -20,6 +21,7 @@ function App() {
 
           {/* 오너먼트 */}
           <Route exact path="/main" element={<Main />} />
+          <Route exact path="/main/post" element={<Post />} />
 
           {/* 트리 */}
           <Route exact path="/tree" element={<Tree />} />

@@ -1,3 +1,4 @@
+import Header from "../components/Header";
 import "../styles/Tree.css";
 
 function Tree() {
@@ -5,7 +6,9 @@ function Tree() {
     <div className="tree-page">
       <div className="page-bg">
         <div className="center">
-          <div className="white-door"></div>
+          <div className="tree-content">
+            <Header />
+          </div>
         </div>
       </div>
     </div>
