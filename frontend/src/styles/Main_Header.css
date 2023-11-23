@@ -1,0 +1,15 @@
+.Header {
+  width: 390px;
+  height: 39px;
+}
+
+.hd-img {
+  display: flex;
+  justify-content: space-between;
+
+  margin: 10px;
+}
+
+.hd-img {
+  height: 34px;
+}
