@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "../styles/Main_Header.css";
 
-import logout from "../img/sign-out.png";
+import logout from "../img/logout.png";
 import setting from "../img/settings.png";
 
 function Main_Header() {
