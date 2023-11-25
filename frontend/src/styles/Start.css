@@ -15,11 +15,17 @@
 }
 
 .center {
-  width: 390px;
+  width: 100vw;
   height: 100vh;
   background-color: rgb(255, 255, 255, 0.5);
   display: flex;
   justify-content: center;
+}
+
+@media (hover: hover) {
+  .center {
+    width: 390px;
+  }
 }
 
 .white-door {
