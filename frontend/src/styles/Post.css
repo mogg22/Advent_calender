@@ -1,6 +1,7 @@
 .white-door-post {
   width: 95%;
   height: 80%;
+  min-height: 782px;
   position: relative;
   top: calc(100vh * 0.2 - 39px - 10px);
 
