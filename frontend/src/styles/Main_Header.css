@@ -1,6 +1,12 @@
 .Header {
-  width: 390px;
+  width: 100vw;
   height: 39px;
+}
+
+@media (hover: hover) {
+  .Header {
+    width: 390px;
+  }
 }
 
 .hd-img {
