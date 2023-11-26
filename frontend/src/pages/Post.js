@@ -1,7 +1,7 @@
 import Other_Header from "../components/Other_Header";
 import "../styles/Post.css";
 
-import ribbon from "../img/ribbon.png";
+import ribbon from "../img/ornament15.png";
 
 function Post() {
   return (

@@ -4,6 +4,7 @@
   background-color: #465c38;
   width: 100vw;
   height: 100vh;
+  min-height: 844px;
 }
 
 .today-date {
