@@ -1,24 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Main_Header from "../components/Main_Header";
 import { Link } from "react-router-dom";
 import Modal from "../components/Modal";
 import "../styles/Main.css";
 
 function Main() {
-  // Create an array with numbers from 1 to 25
   const boxNumbers = Array.from({ length: 25 }, (_, index) => index + 1);
-
-  // Divide the boxNumbers array into chunks of 5
   const chunkedBoxNumbers = [];
   for (let i = 0; i < boxNumbers.length; i += 5) {
     chunkedBoxNumbers.push(boxNumbers.slice(i, i + 5));
   }
 
-  const [selectedNumber, setSelectedNumber] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentDate, setCurrentDate] = useState("");
 
-  const openModal = (number) => {
-    setSelectedNumber(number);
+  useEffect(() => {
+    // Function to get the current date in the format `${month}.${day}`
+    const getCurrentDate = () => {
+      const date = new Date();
+      const month = date.getMonth() + 1; // Months are zero-indexed
+      const day = date.getDate();
+      return `${month}.${day}`;
+    };
+
+    // Set the current date when the component mounts
+    setCurrentDate(getCurrentDate());
+  }, []);
+
+  const openModal = () => {
     setIsModalOpen(true);
   };
 
@@ -36,7 +45,7 @@ function Main() {
             </div>
             <div className="today-date">
               <p>Today</p>
-              <p style={{ marginLeft: 20 }}>12.03</p>
+              <p style={{ marginLeft: 20 }}>{currentDate}</p>
             </div>
             <div className="main-calendar-box">
               <div className="main-calendar">
@@ -62,11 +71,7 @@ function Main() {
         </div>
       </div>
 
-      {isModalOpen && (
-        <Modal onClose={closeModal}>
-          <p>Clicked Box: {selectedNumber}</p>
-        </Modal>
-      )}
+      {isModalOpen && <Modal onClose={closeModal} />}
     </div>
   );
 }

@@ -12,10 +12,12 @@
 }
 
 .modal-content {
-  background: #fff;
+  background: none;
   padding: 20px;
   border-radius: 8px;
   text-align: center;
 }
 
-/* Add any additional styling as needed */
+.modal-content img {
+  height: 15vh;
+}
