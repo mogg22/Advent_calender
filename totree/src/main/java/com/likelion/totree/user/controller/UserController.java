@@ -22,8 +22,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -159,8 +161,10 @@ public class UserController {
     @GetMapping("/readposts")
     public ResponseEntity<List<PostResponse>> getUserPosts(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         List<PostResponse> userPosts = userService.getUserPosts(userDetails.getUsername());
-
-        return ResponseEntity.ok(userPosts);
+        List<PostResponse> sortedUserPosts=userPosts.stream()
+                .sorted(Comparator.comparingInt(PostResponse::getDate))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(sortedUserPosts);
     }
 
     @PatchMapping("/update-receiver")
