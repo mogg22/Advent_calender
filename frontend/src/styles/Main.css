@@ -1,10 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Praise&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Alumni+Sans+Collegiate+One&display=swap");
 
 .main-page {
   background-color: #465c38;
   width: 100vw;
   height: 100vh;
   min-height: 844px;
+}
+
+.main-hd-center {
+  display: flex;
+  justify-content: center;
 }
 
 .today-date {
@@ -18,13 +24,26 @@
   text-shadow: calc(4px * 1) calc(4px * 0) 0 #ffad00, calc(4px * 0.9239) calc(4px * 0.3827) 0 #ffad00, calc(4px * 0.7071) calc(4px * 0.7071) 0 #ffad00, calc(4px * 0.3827) calc(4px * 0.9239) 0 #ffad00, calc(4px * 0) calc(4px * 1) 0 #ffad00, calc(4px * -0.3827) calc(4px * 0.9239) 0 #ffad00, calc(4px * -0.7071) calc(4px * 0.7071) 0 #ffad00, calc(4px * -0.9239) calc(4px * 0.3827) 0 #ffad00, calc(4px * -1) calc(4px * 0) 0 #ffad00, calc(4px * -0.9239) calc(4px * -0.3827) 0 #ffad00, calc(4px * -0.7071) calc(4px * -0.7071) 0 #ffad00, calc(4px * -0.3827) calc(4px * -0.9239) 0 #ffad00, calc(4px * 0) calc(4px * -1) 0 #ffad00, calc(4px * 0.3827) calc(4px * -0.9239) 0 #ffad00, calc(4px * 0.7071) calc(4px * -0.7071) 0 #ffad00, calc(4px * 0.9239) calc(4px * -0.3827) 0 #ffad00, 0 7px 6px rgb(0, 0, 0, 0.5);
 }
 
+.main-calendar-box {
+  display: flex;
+  justify-content: center;
+}
+
 .main-calendar {
   background-image: url("../img/bg_calendar.png");
-  background-size: cover;
-  background-position: top;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 
-  height: 660px;
+  /* height: 660px; */
+  width: 98vw;
+  height: 78.5vh;
   margin-top: -15px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .go-tree-btn {
@@ -41,4 +60,31 @@
   font-weight: bold;
 
   padding: 10px 40px;
+}
+
+.boxs {
+  margin-right: 1.5px;
+  margin-top: 28.8vh;
+}
+
+.box {
+  display: inline-flex;
+  background-image: url("../img/box.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  width: 9.5vh;
+  height: 9.5vh;
+
+  justify-content: center;
+  align-items: center;
+  margin: -0.37vh;
+}
+
+.box p {
+  font-family: "Alumni Sans Collegiate One", sans-serif;
+  color: #301c19;
+  font-size: 2.7em;
+  padding-top: 0.7vh;
 }
