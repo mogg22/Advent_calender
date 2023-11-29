@@ -1,0 +1,43 @@
+.start-page {
+    background-color: #77514e;
+    width: 100vw;
+    height: 100vh;
+    min-height: 844px;
+}
+
+.page-bg {
+    background-image: url("../img/background.png");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    min-height: 844px;
+    display: flex;
+    justify-content: center;
+}
+
+.center {
+    width: 100vw;
+    height: 100vh;
+    min-height: 844px;
+    background-color: rgb(255, 255, 255, 0.5);
+    display: flex;
+    justify-content: center;
+}
+
+@media (hover: hover) {
+    .center {
+    width: 390px;
+    }
+}
+
+.white-door {
+    width: 95%;
+    height: 85%;
+    min-height: 748px;
+    position: relative;
+    top: calc(100vh * 0.15);
+
+    background-color: #f1f1ef;
+    border-radius: 200px 200px 0 0;
+    z-index: -1;
+}

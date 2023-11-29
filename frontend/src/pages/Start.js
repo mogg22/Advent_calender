@@ -15,10 +15,10 @@ function Start() {
               <div className="start-btn">
                 <div className="login-btn">
                   <Link to="/Login"><p>로그인</p></Link>
-                  </div>
+                </div>
                 <div className="register-btn">
-                <Link to="/Register"><p>회원가입</p></Link>
-                  </div>
+                  <Link to="/Register"><p>회원가입</p></Link>
+                </div>
               </div>
             </div>
           </div>
