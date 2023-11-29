@@ -1,3 +1,4 @@
+
 .start-page {
     background-color: #77514e;
     width: 100vw;
@@ -30,14 +31,73 @@
     }
 }
 
-.white-door {
-    width: 95%;
-    height: 85%;
-    min-height: 748px;
-    position: relative;
-    top: calc(100vh * 0.15);
+.login-content {
+    background-image: url("../img/whitedoor_main.png") ;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
 
-    background-color: #f1f1ef;
-    border-radius: 200px 200px 0 0;
-    z-index: -1;
+    width: 180vw;
+    height: 100vh;
+    margin-top: 25px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    width: 30vw;
+    height: 20vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0px 10px 0px;
+}
+
+.name, .password{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+label {
+    width: 83px;
+    box-sizing: border-box;
+    background-color: #a31b1f;
+    border-radius: 30px;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 8px 20px;
+    margin: 20px 0px 18px 0px;
+    text-align: center;
+}
+
+.password label {
+    margin-top: 50px;
+}
+
+.blank {
+    width: 80%;
+    border: none;
+    border-bottom: 1px solid #000;
+    outline: none; 
+}
+
+button {
+    width: 83px;
+    box-sizing: border-box;
+    background-color: #002B5B;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 8px 20px;
+    margin: 50px 0px 10px 0px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
 }
