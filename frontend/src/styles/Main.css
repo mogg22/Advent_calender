@@ -88,3 +88,19 @@
   font-size: 2.7em;
   padding-top: 0.7vh;
 }
+
+.box {
+  position: relative;
+  overflow: hidden;
+}
+
+.box-opened::before {
+  content: "";
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  height: 80%;
+  background-color: rgba(0, 0, 0, 0.5); /* 검은색 배경 필터 색상 및 투명도 조절 */
+  pointer-events: none; /* 클릭 이벤트를 비활성화합니다. */
+}
