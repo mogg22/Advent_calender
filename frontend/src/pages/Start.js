@@ -22,7 +22,6 @@ function Start() {
               </div>
             </div>
           </div>
-          <div className="white-door"></div>
         </div>
       </div>
     </div>

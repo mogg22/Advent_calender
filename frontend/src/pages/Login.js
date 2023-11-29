@@ -1,25 +1,24 @@
-// import "../styles/Login.css";
+import "../styles/Login.css";
+import Title from "../img/title.png";
 
 function Login() {
   return (
     <div className="start-page">
       <div className="page-bg">
         <div className="center">
-          <div className="white-door"></div>
-          <div className="title"></div>
           <div className="login-content">
-            <div className="ID">
-              <p>아이디</p>
-              <form></form>
+            <div className="title">
+                <img src={Title}/>
+            </div>
+            <div className="name">
+              <label>닉네임</label>
+              <input className="blank" type="text" />
             </div>
             <div className="password">
-              <p>비밀번호</p>
-              <form></form>
+              <label>비밀번호</label>
+              <input className="blank" type="password" />
             </div>
-            <div className="tosend">
-              <p>누구에게 편지를 보내고 싶은가요?</p>
-              <form></form>
-            </div>
+            <button>로그인</button>
           </div>
         </div>
       </div>
