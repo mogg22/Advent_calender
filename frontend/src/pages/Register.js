@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "../styles/Register.css";
 import Title from "../img/title.png";
+
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -45,7 +47,7 @@ function Register() {
             <div className="title">
               <img src={Title} />
             </div>
-            <div className="name">
+            <div className="nickname">
               <p>닉네임</p>
               <input className="blank" type="text" name="nickname" onChange={handleInputChange} />
             </div>
@@ -62,7 +64,9 @@ function Register() {
               <input className="blank" type="text" name="receiver" onChange={handleInputChange} />
             </div>
             <div className="submit" onClick={handleSignUp}>
-              <p>회원가입</p>
+              <Link to="/start">
+                <p>회원가입</p>
+              </Link>
             </div>
           </div>
         </div>

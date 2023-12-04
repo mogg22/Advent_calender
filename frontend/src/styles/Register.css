@@ -56,7 +56,7 @@
     margin: 10px 0px 10px 0px;
 }
 
-.name, .password, .check, .tosend{
+.nickname, .password, .check, .tosend{
     display: flex;
     flex-direction: column;
     justify-content: center;
