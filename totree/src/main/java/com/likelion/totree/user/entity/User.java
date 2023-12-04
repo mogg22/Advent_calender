@@ -55,6 +55,13 @@ public class User {
         this.posts = new ArrayList<>();
     }
 
+    public void ticketUp(){
+        this.ticket+=1;
+    }
+    public void ticketDown(){
+        this.ticket-=1;
+    }
+
     private int[] getArray() {
         List<Integer> shuffledList = new ArrayList<>();
 
@@ -72,5 +79,9 @@ public class User {
     public void addPost(Post post) {
         this.posts.add(post);
         post.setUser(this);
+    }
+
+    public void setReceiver(String newReceiver) {
+        this.receiver = newReceiver;
     }
 }

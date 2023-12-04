@@ -14,12 +14,14 @@ public class PostResponse {
     private Long id;
     private String content;
     private String nickname;
+    private int date;
 
     public static PostResponse of(Post post) {
         PostResponse response = new PostResponse();
         response.setId(post.getId());
         response.setContent(post.getContent());
         response.setNickname(post.getUser().getNickname());
+        response.setDate(post.getDate());
 
         return response;
     }

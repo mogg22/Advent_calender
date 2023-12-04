@@ -1,14 +1,18 @@
 package com.likelion.totree.user.controller;
 
 import com.likelion.totree.security.dto.TokenResponse;
+import com.likelion.totree.security.exception.AlreadyExistsError;
+import com.likelion.totree.security.exception.DifferentDateError;
+import com.likelion.totree.security.exception.NoTicketError;
 import com.likelion.totree.security.jwt.JwtProvider;
 import com.likelion.totree.security.service.UserDetailsImpl;
-import com.likelion.totree.user.dto.LoginRequest;
-import com.likelion.totree.user.dto.ReissueTokenRequest;
-import com.likelion.totree.user.dto.SignUpRequest;
-import com.likelion.totree.user.dto.UserResponse;
+import com.likelion.totree.user.dto.*;
+import com.likelion.totree.user.entity.Post;
+import com.likelion.totree.user.entity.User;
+import com.likelion.totree.user.repository.PostRepository;
 import com.likelion.totree.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,7 +21,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/users")
@@ -25,6 +35,8 @@ public class UserController {
 
     private final UserService userService;
     private final JwtProvider jwtProvider;
+
+    private final PostRepository postRepository;
 
     /**
      * 회원가입
@@ -77,6 +89,11 @@ public class UserController {
         return userService.getUserInfo(userDetails.getUsername());  // username = nickname
     }
 
+    @GetMapping("/get-ticket")
+    public UserResponse getTicket(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return userService.getTicket(userDetails.getUsername());  // username = nickname
+    }
+
     /**
      *  AccessToken  재발급
      * 매 API 호출 시 시큐리티필터를 통해 인증인가를 받게  된다. 이때 만료된 토큰인지 검증하고 만료시 만료된토큰임을 에러메세지로 보낸다.
@@ -91,6 +108,72 @@ public class UserController {
         // 유저 객체 정보를 이용하여 토큰 발행
         UserResponse user = UserResponse.of(userDetails.getUser());
         return jwtProvider.reissueAtk(user.getNickname(), user.getRole(), tokenRequest.getRefreshToken());
+    }
+
+    @PostMapping("/post/{date}")
+    public ResponseEntity<String> savePost(
+            @PathVariable int date,
+            @RequestBody Map<String, String> requestBody,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+        LocalDate currentDate = LocalDate.now();
+        String content = requestBody.get("content");
+
+
+        try{
+            userService.savePost(userDetails.getUsername(), content, date);
+            return ResponseEntity.ok("글이 성공적으로 저장되었습니다.");
+        }catch(AlreadyExistsError e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }catch (DifferentDateError e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+
+        }catch(NoTicketError e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+
+    }
+
+    @PostMapping("/ticket/post/{date}")
+    public ResponseEntity<String> ticketSavePost(
+            @PathVariable int date,
+            @RequestBody Map<String, String> requestBody,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+        LocalDate currentDate = LocalDate.now();
+        String content = requestBody.get("content");
+
+
+        try{
+            userService.saveTicketPost(userDetails.getUsername(), content, date);
+            return ResponseEntity.ok("이용권을 사용하여 글이 성공적으로 저장되었습니다.");
+        }catch(AlreadyExistsError e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }catch (DifferentDateError e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+
+        }catch(NoTicketError e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+
+    }
+
+
+    @GetMapping("/readposts")
+    public ResponseEntity<List<PostResponse>> getUserPosts(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        List<PostResponse> userPosts = userService.getUserPosts(userDetails.getUsername());
+        List<PostResponse> sortedUserPosts=userPosts.stream()
+                .sorted(Comparator.comparingInt(PostResponse::getDate))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(sortedUserPosts);
+    }
+
+    @PatchMapping("/update-receiver")
+    public ResponseEntity updateReceiver(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                         @RequestBody Map<String, String> requestBody) {
+        String newReceiver = requestBody.get("newReceiver");
+        userService.updateReceiver(userDetails.getUsername(), newReceiver);
+        return ResponseEntity.ok("Receiver 정보 업데이트");
     }
 
 }
