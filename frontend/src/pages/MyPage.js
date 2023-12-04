@@ -53,7 +53,7 @@ function Register() {
               <div className="profile">
                 <img src={Profile} />
               </div>
-              <p>username1234</p>
+              <p>username123</p>
               {/* <input className="blank" type="text" name="nickname"/> */}
               {/* <input className="blank" type="text" name="nickname" onChange={handleInputChange} /> */}
             </div>
