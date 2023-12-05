@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/Login.css";
@@ -11,6 +11,17 @@ function Login() {
   });
 
   const navigate = useNavigate();
+
+  // 이펙트를 사용하여 기존에 저장된 토큰이 있는지 확인
+  useEffect(() => {
+    const existingToken = localStorage.getItem("accessToken");
+
+    if (existingToken) {
+      // Authorization 헤더를 설정하고 메인 페이지로 이동
+      axios.defaults.headers.common["Authorization"] = `${existingToken}`;
+      navigate("/main", { state: { accessToken: existingToken } });
+    }
+  }, [navigate]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -26,17 +37,22 @@ function Login() {
         },
       });
 
+      const { accessToken, refreshToken } = response.data;
+
       if (response.status === 200) {
-        // Handle successful login
+        // 로그인 성공 시 처리
         console.log("User logged in successfully");
 
-        // Extract accessToken from the response
-        const { accessToken } = response.data;
+        // 로컬 스토리지에 토큰 저장
+        localStorage.setItem("accessToken", accessToken);
 
-        // Navigate to the "/main" route with accessToken in the state
+        // Axios의 기본 헤더에 accessToken 추가
+        axios.defaults.headers.common["Authorization"] = `${accessToken}`;
+
+        // 메인 페이지로 리다이렉트
         navigate("/main", { state: { accessToken } });
       } else {
-        // Handle login failure
+        // 로그인 실패 시 처리
         console.error("Error logging in");
       }
     } catch (error) {

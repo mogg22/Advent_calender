@@ -4,7 +4,6 @@ import axios from "axios";
 import "../styles/Register.css";
 import Title from "../img/title.png";
 
-
 function Register() {
   const [formData, setFormData] = useState({
     nickname: "",
@@ -64,7 +63,7 @@ function Register() {
               <input className="blank" type="text" name="receiver" onChange={handleInputChange} />
             </div>
             <div className="submit" onClick={handleSignUp}>
-              <Link to="/start">
+              <Link to="/">
                 <p>회원가입</p>
               </Link>
             </div>
