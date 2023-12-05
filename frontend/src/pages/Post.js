@@ -1,11 +1,15 @@
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import Post_Header from "../components/Post_Header";
 import "../styles/Post.css";
-
 import ribbon from "../img/ribbon.png";
 
 function Post() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // 이전 페이지에서 전달받은 토큰 값을 추출
+  const { accessToken } = location.state || { accessToken: null };
 
   const getCurrentDate = () => {
     const now = new Date();
@@ -16,21 +20,17 @@ function Post() {
   };
 
   const handleSubmit = (event) => {
-    // Prevent the default form submission
     event.preventDefault();
 
-    // Get the current date
     const currentDate = getCurrentDate();
-
-    // Access the form data and do whatever you need with it
     const formData = new FormData(event.target);
     formData.append("currentDate", currentDate);
 
-    // Perform your form submission logic here
-    // For example, you can send the formData to a server or do some other processing
+    // 여기서 accessToken을 사용하여 필요한 작업 수행
     // ...
 
-    navigate("/main");
+    // main 페이지로 navigate 할 때 accessToken을 전달
+    navigate("/main", { state: { accessToken } });
   };
 
   return (
@@ -48,7 +48,7 @@ function Post() {
               </div>
               <div className="post-write">
                 <form onSubmit={handleSubmit}>
-                  <div class="write-content">
+                  <div className="write-content">
                     <textarea name="comment" placeholder="담길 이야기"></textarea>
                   </div>
                   <input type="hidden" name="currentDate" value={getCurrentDate()} />

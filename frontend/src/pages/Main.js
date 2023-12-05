@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Main_Header from "../components/Main_Header";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Modal from "../components/Modal";
 import "../styles/Main.css";
 
@@ -19,8 +19,14 @@ function Main() {
   const [currentDate, setCurrentDate] = useState("");
 
   const location = useLocation();
+  const navigate = useNavigate();
+
   const { accessToken } = location.state || { accessToken: null };
+
+  // accessToken을 state로 관리
+  const [userToken, setUserToken] = useState(accessToken);
   const [userOrnamentOrder, setUserOrnamentOrder] = useState([]);
+  const [openedBoxes, setOpenedBoxes] = useState([]);
 
   useEffect(() => {
     const getCurrentDate = () => {
@@ -36,16 +42,13 @@ function Main() {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        if (!accessToken) {
+        if (!userToken) {
           console.error("Access token is missing");
           return;
         }
 
         const response = await axios.get("http://localhost:8080/api/users/user-info", {
           withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
         });
 
         setUserOrnamentOrder(response.data.ornament);
@@ -55,21 +58,27 @@ function Main() {
     };
 
     fetchUserInfo();
-  }, [accessToken]);
-
-  const [openedBoxes, setOpenedBoxes] = useState([]);
+  }, [userToken]);
 
   const isBoxOpened = (boxNumber) => openedBoxes.includes(boxNumber);
 
   const openModal = (boxNumber) => {
     setIsModalOpen(true);
-    setModalContent(ornamentImages[userOrnamentOrder.indexOf(boxNumber)]);
+
+    const imageIndex = userOrnamentOrder.indexOf(boxNumber) + 1;
+
+    setModalContent(ornamentImages[imageIndex]);
     setOpenedBoxes([...openedBoxes, boxNumber]);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
     setModalContent(null);
+  };
+
+  // 페이지 간 이동 시에도 토큰을 전달하도록 navigate 함수 사용
+  const handleTreeLink = () => {
+    navigate("/tree", { state: { accessToken } });
   };
 
   return (
@@ -92,7 +101,8 @@ function Main() {
                       {row.map((number) => (
                         <div key={number} className={`box ${isBoxOpened(number) ? "box-opened" : ""}`} onClick={() => openModal(number)}>
                           <p>{number}</p>
-                          {isBoxOpened(number) && <img src={ornamentImages[userOrnamentOrder.indexOf(number)]} alt={`ornament-${number}`} />}
+                          {/* {isBoxOpened(number) && <img src={ornamentImages[userOrnamentOrder.indexOf(number)]} alt={`ornament-${number}`} />} */}
+                          {isBoxOpened}
                         </div>
                       ))}
                     </div>
@@ -100,11 +110,10 @@ function Main() {
                 </div>
               </div>
             </div>
-            <Link to="/tree">
-              <div className="go-tree-btn">
-                <p>내 트리 보러가기</p>
-              </div>
-            </Link>
+            {/* handleTreeLink 함수를 사용하여 페이지 간 이동 시 토큰 전달 */}
+            <div className="go-tree-btn" onClick={handleTreeLink}>
+              <p>내 트리 보러가기</p>
+            </div>
           </div>
         </div>
       </div>

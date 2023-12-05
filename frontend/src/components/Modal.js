@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
-// import ornamentImage from "../img/ornament20.png";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../styles/Modal.css";
 
 function Modal({ onClose, boxNumber }) {
   const [ornamentImage, setOrnamentImage] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // 이전 페이지에서 전달받은 토큰 값을 추출
+  const { accessToken } = location.state || { accessToken: null };
 
   useEffect(() => {
     // 박스 번호에 해당하는 이미지 설정
@@ -11,12 +16,14 @@ function Modal({ onClose, boxNumber }) {
 
     const timeoutId = setTimeout(() => {
       onClose();
+
       // 1.5초 후에 "/main/post"로 리다이렉트
-      window.location.href = "/main/post";
+      // accessToken을 state로 전달
+      navigate("/main/post", { state: { accessToken } });
     }, 1500);
 
     return () => clearTimeout(timeoutId);
-  }, [onClose, boxNumber]);
+  }, [onClose, boxNumber, navigate]);
 
   return (
     <div className="modal-overlay">
