@@ -65,11 +65,13 @@ public class User {
     private int[] getArray() {
         List<Integer> shuffledList = new ArrayList<>();
 
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 24; i++) {
             shuffledList.add(i);
         }
 
+
         Collections.shuffle(shuffledList);
+        shuffledList.add(24);
         int[] shuffledArray = shuffledList.stream().mapToInt(Integer::intValue).toArray();
 
 
