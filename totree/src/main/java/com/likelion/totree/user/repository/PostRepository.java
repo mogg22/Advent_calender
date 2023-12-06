@@ -12,5 +12,5 @@ import java.util.Optional;
 public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findByUserNickname(String nickname);
-    Optional<Post> findByDate(int date);
+    Optional<Post> findByUserAndDate(User user, int date);
 }

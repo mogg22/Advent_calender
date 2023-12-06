@@ -130,7 +130,7 @@ public class UserService {
         if (currentDate.getDayOfMonth() != date) {
             throw new DifferentDateError("오늘이 아닙니다");
         }
-        Optional<Post> existingPost = postRepository.findByDate(date);
+        Optional<Post> existingPost = postRepository.findByUserAndDate(user, date);
 
         if (existingPost.isPresent()) {
             throw new AlreadyExistsError();
@@ -161,7 +161,7 @@ public class UserService {
         if (currentDate.getDayOfMonth() <= date) {
             throw new DifferentDateError("현재 날짜보다 이전이어야 합니다");
         }
-        Optional<Post> existingPost = postRepository.findByDate(date);
+        Optional<Post> existingPost = postRepository.findByUserAndDate(user, date);
 
         if (existingPost.isPresent()) {
             throw new AlreadyExistsError();
