@@ -68,3 +68,15 @@ input[type="submit"] {
 
   padding: 10px 30px;
 }
+
+.submit-btn button {
+  background-color: #a31b1f;
+  border-radius: 30px;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  font-family: "Pretendard-Regular";
+  border: none;
+
+  padding: 10px 30px;
+}
