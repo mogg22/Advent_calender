@@ -67,11 +67,14 @@ function Post() {
                 <p>이야기를 담아주세요</p>
               </div>
               <div className="post-write">
-                <div className="write-content">
-                  <textarea name="content" placeholder="담길 이야기" onChange={handleInputChange}></textarea>
-                </div>
-                <div className="submit-btn">
-                  <button onClick={handleSubmit}>담기</button>
+                <div className="post-form">
+                  <div className="write-content">
+                    <textarea name="content" placeholder="담길 이야기" onChange={handleInputChange}></textarea>
+                  </div>
+                  <input type="hidden" name="currentDate" value={getCurrentDate()} />
+                  <div className="submit-btn">
+                    <button onClick={handleSubmit}>담기</button>
+                  </div>
                 </div>
               </div>
             </div>
