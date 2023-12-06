@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 import Post_Header from "../components/Post_Header";
 import "../styles/Post.css";
 import ribbon from "../img/ribbon.png";
 
 function Post() {
+  const [postData, setPostData] = useState({
+    content: "",
+  });
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -16,21 +21,36 @@ function Post() {
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, "0");
     const day = String(now.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
+    return { year, month, day };
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setPostData({ ...postData, [name]: value });
+  };
 
-    const currentDate = getCurrentDate();
-    const formData = new FormData(event.target);
-    formData.append("currentDate", currentDate);
+  const handleSubmit = async () => {
+    const { year, month, day } = getCurrentDate(); // Destructure the returned object
+    const formattedDay = day.replace(/^0+/, "");
+    const currentDate = `${year}-${month}-${formattedDay}`;
 
-    // 여기서 accessToken을 사용하여 필요한 작업 수행
-    // ...
+    try {
+      const response = await axios.post(`http://localhost:8080/api/users/post/${formattedDay}`, postData, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    // main 페이지로 navigate 할 때 accessToken을 전달
-    navigate("/main", { state: { accessToken } });
+      // 서버로부터의 응답을 확인하고 필요한 작업 수행
+      console.log(response.data);
+
+      // main 페이지로 navigate 할 때 accessToken을 전달
+      navigate("/main", { state: { accessToken } });
+    } catch (error) {
+      // 오류 처리
+      console.error("Error submitting post:", error);
+    }
   };
 
   return (
@@ -47,15 +67,15 @@ function Post() {
                 <p>이야기를 담아주세요</p>
               </div>
               <div className="post-write">
-                <form onSubmit={handleSubmit}>
+                <div className="post-form">
                   <div className="write-content">
-                    <textarea name="comment" placeholder="담길 이야기"></textarea>
+                    <textarea name="content" placeholder="담길 이야기" onChange={handleInputChange}></textarea>
                   </div>
                   <input type="hidden" name="currentDate" value={getCurrentDate()} />
                   <div className="submit-btn">
-                    <input type="submit" value="담기" name="submit" />
+                    <button onClick={handleSubmit}>담기</button>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
           </div>
