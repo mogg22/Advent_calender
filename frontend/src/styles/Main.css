@@ -104,3 +104,123 @@
   background-color: rgba(0, 0, 0, 0.5); /* 검은색 배경 필터 색상 및 투명도 조절 */
   pointer-events: none; /* 클릭 이벤트를 비활성화합니다. */
 }
+
+@media (width < 430px) {
+  .box {
+    margin: -0.45vh;
+  }
+
+  .boxs {
+    margin-top: 28.5vh;
+  }
+}
+
+@media (width < 421px) {
+  .box {
+    width: 9.3vh;
+    height: 9.3vh;
+    margin: -0.42vh;
+  }
+
+  .boxs {
+    margin-top: 28vh;
+  }
+}
+
+@media (width < 416px) {
+  .box {
+    margin: -0.47vh;
+  }
+
+  .boxs {
+    margin-top: 27.3vh;
+  }
+}
+
+@media (width < 410px) {
+  .box {
+    margin: -0.5vh;
+  }
+  .boxs {
+    margin-top: 27.5vh;
+  }
+}
+
+@media (width < 406px) {
+  .box {
+    margin: -0.6vh;
+  }
+  .boxs {
+    margin-top: 27vh;
+  }
+}
+
+@media (width < 401px) {
+  .box {
+    margin: -0.65vh;
+  }
+  .boxs {
+    margin-top: 26.8vh;
+  }
+}
+
+@media (width < 391px) {
+  .today-date {
+    font-size: 4.3em;
+  }
+
+  .box {
+    width: 9vh;
+    height: 9vh;
+    margin: -0.56vh;
+  }
+
+  .boxs {
+    margin-top: 25.8vh;
+  }
+
+  .go-tree-btn {
+    margin-top: -3vh;
+  }
+}
+
+@media (width < 381px) {
+  .box {
+    margin: -0.4vh;
+  }
+  .boxs {
+    margin-top: 27vh;
+  }
+}
+
+@media (width < 431px) and (height < 933px) {
+  .box {
+    margin: -0.48vh;
+  }
+
+  .boxs {
+    margin-top: 28.2vh;
+  }
+}
+
+@media (width < 391px) and (height < 845px) {
+  .box {
+    width: 9.5vh;
+    height: 9.5vh;
+    margin: -0.5vh;
+  }
+
+  .boxs {
+    margin-top: 28vh;
+  }
+}
+
+@media (width < 376px) and (height < 636px) {
+  .box {
+    margin: -0.4vh;
+  }
+
+  .boxs {
+    margin-top: 28.7vh;
+  }
+}
