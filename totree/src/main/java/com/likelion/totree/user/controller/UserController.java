@@ -165,7 +165,7 @@ public class UserController {
         List<PostResponse> sortedUserPosts=userPosts.stream()
                 .sorted(Comparator.comparingInt(PostResponse::getDate))
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(sortedUserPosts);
+        return ResponseEntity.ok(userPosts);
     }
 
     @PatchMapping("/update-receiver")
