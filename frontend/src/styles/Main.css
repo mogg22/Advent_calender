@@ -255,6 +255,7 @@
 }
 
 /* 사파리 탭 viewport 약 131px */
+/* 삼성 탭 viewport 약 60px */
 
 @media (width < 431px) and (height < 933px) {
   .box {
@@ -288,6 +289,30 @@
 }
 
 @media (width < 415px) and (height < 766px) {
+  .box {
+    width: 9.5vh;
+    height: 9.5vh;
+    margin: -0.39vh;
+  }
+
+  .boxs {
+    margin-top: 28.7vh;
+  }
+}
+
+@media (width < 413px) and (height < 945px) {
+  .box {
+    width: 9.5vh;
+    height: 9.5vh;
+    margin: -0.75vh;
+  }
+
+  .boxs {
+    margin-top: 26.5vh;
+  }
+}
+
+@media (width < 413px) and (height < 856px) {
   .box {
     width: 9.5vh;
     height: 9.5vh;
@@ -337,6 +362,19 @@
 
   .boxs {
     margin-top: 28.7vh;
+  }
+}
+
+@media (width < 385px) and (height < 795px) {
+  .box {
+    width: 9.5vh;
+    height: 9.5vh;
+    margin: -0.4vh;
+  }
+
+  .boxs {
+    margin-top: 28.7vh;
+    margin-right: 0;
   }
 }
 
