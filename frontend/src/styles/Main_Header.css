@@ -27,3 +27,40 @@
   font-size: 1.2em;
   padding-top: 7vh;
 }
+
+.setting-ticket {
+  display: flex;
+  align-items: center;
+}
+
+.ticket-box {
+  width: calc(25vw - 30px);
+  height: 34px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: #a31b1f;
+  border-radius: 30px;
+
+  padding: 0 15px;
+  color: white;
+  font-size: 1.2em;
+  font-weight: bold;
+
+  margin-left: 10px;
+}
+
+@media (hover: hover) {
+  .ticket-box {
+    width: calc(112px - 30px);
+  }
+}
+
+.ticket-img img {
+  height: 45px;
+}
+
+.ticket-box p {
+  margin-right: 10px;
+}

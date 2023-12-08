@@ -5,6 +5,7 @@ import "../styles/Main_Header.css";
 
 import logout from "../img/logout.png";
 import setting from "../img/settings.png";
+import ticket from "../img/ticket.png";
 
 function Main_Header() {
   const navigate = useNavigate();
@@ -31,9 +32,17 @@ function Main_Header() {
   return (
     <div className="Header">
       <div className="hd-img">
-        <Link to="/mypage">
-          <img src={setting} alt="설정" />
-        </Link>
+        <div className="setting-ticket">
+          <Link to="/mypage">
+            <img src={setting} alt="설정" />
+          </Link>
+          <div className="ticket-box">
+            <div className="ticket-img">
+              <img src={ticket} alt="티켓" />
+            </div>
+            <p>3</p>
+          </div>
+        </div>
         <Link to="/">
           <img src={logout} alt="로그아웃" onClick={handleLogout} />
         </Link>
