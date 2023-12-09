@@ -34,7 +34,7 @@
 }
 
 .ticket-box {
-  width: calc(25vw - 30px);
+  width: 100%;
   height: 34px;
   display: flex;
   justify-content: space-between;
@@ -51,10 +51,8 @@
   margin-left: 10px;
 }
 
-@media (hover: hover) {
-  .ticket-box {
-    width: calc(112px - 30px);
-  }
+.ticket-img {
+  margin-right: 5px;
 }
 
 .ticket-img img {
@@ -62,5 +60,5 @@
 }
 
 .ticket-box p {
-  margin-right: 10px;
+  margin: 0 10px;
 }
