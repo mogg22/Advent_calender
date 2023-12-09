@@ -105,11 +105,11 @@
   overflow: hidden;
 }
 
-.box.today::before {
+.box.can-box-open::before {
   content: none;
 }
 
-.box.today {
+.box.can-box-open {
   opacity: 1;
 }
 

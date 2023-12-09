@@ -16,6 +16,7 @@ function Main() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  const [modalNumContent, setModalNumContent] = useState(null);
   const [currentDate, setCurrentDate] = useState("");
   const [apiDates, setApiDates] = useState([]);
 
@@ -28,6 +29,7 @@ function Main() {
   const [userToken, setUserToken] = useState(accessToken);
   const [userOrnamentOrder, setUserOrnamentOrder] = useState([]);
   const [openedBoxes, setOpenedBoxes] = useState([]);
+  const [ticketCount, setTicketCount] = useState(0);
 
   useEffect(() => {
     const getCurrentDate = () => {
@@ -77,6 +79,28 @@ function Main() {
     fetchApiDates();
   }, []);
 
+  useEffect(() => {
+    const fetchTicketCount = async () => {
+      try {
+        if (!userToken) {
+          console.error("Access token is missing");
+          return;
+        }
+
+        const response = await axios.get("http://localhost:8080/api/users/user-info", {
+          withCredentials: true,
+        });
+
+        // ticketCount 상태 업데이트
+        setTicketCount(response.data.ticket);
+      } catch (error) {
+        console.error("Error fetching ticket count", error);
+      }
+    };
+
+    fetchTicketCount();
+  }, [userToken]);
+
   const isToday = (boxNumber) => {
     const today = new Date();
     const dayOfMonth = today.getDate();
@@ -105,25 +129,42 @@ function Main() {
     }
   };
 
-  const openModal = (boxNumber) => {
-    const isToday = boxNumber === new Date().getDate();
+  const canOpenBox = (boxNumber) => {
+    const today = new Date();
+    const isToday = boxNumber === today.getDate();
+    const isPastDate = boxNumber <= today.getDate();
+    return (isToday || (ticketCount > 0 && !apiDates.includes(boxNumber))) && isPastDate;
+  };
 
-    // 오늘 날짜가 아닌 상자는 클릭해도 모달이 열리지 않도록 추가
-    if (!isToday || apiDates.includes(boxNumber)) {
+  const openModal = (boxNumber) => {
+    if (isToday && apiDates.includes(boxNumber)) {
       return;
     }
 
-    setIsModalOpen(true);
+    // 박스를 열 수 있는지 확인
+    const canOpen = canOpenBox(boxNumber);
+    const boxDate = boxNumber;
 
-    const imageIndex = userOrnamentOrder.indexOf(boxNumber) + 1;
+    if (canOpen) {
+      setIsModalOpen(true);
 
-    setModalContent(ornamentImages[imageIndex]);
-    setOpenedBoxes([...openedBoxes, boxNumber]);
+      const imageIndex = userOrnamentOrder.indexOf(boxNumber) + 1;
+
+      // setModalContent({
+      //   image: ornamentImages[imageIndex],
+      //   boxNumber: boxNumber,
+      // });
+
+      setModalContent(ornamentImages[imageIndex]);
+      setModalNumContent(boxDate);
+      setOpenedBoxes([...openedBoxes, boxNumber]);
+    }
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
     setModalContent(null);
+    setModalNumContent(null);
   };
 
   // 페이지 간 이동 시에도 토큰을 전달하도록 navigate 함수 사용
@@ -149,7 +190,7 @@ function Main() {
                   {chunkedBoxNumbers.map((row, rowIndex) => (
                     <div key={rowIndex} className="box-row">
                       {row.map((number) => (
-                        <div key={number} className={`box ${isBoxOpened(number) ? "box-opened" : ""} ${isToday(number) ? "today" : ""} ${getBoxClass(number)}`} onClick={() => openModal(number)}>
+                        <div key={number} className={`box ${isBoxOpened(number) ? "box-opened" : ""} ${canOpenBox(number) ? "can-box-open" : ""} ${getBoxClass(number)}`} onClick={() => openModal(number)}>
                           <div className="box-date">
                             <div className="box-content-container">{getBoxContent(number)}</div>
                             <p>{number}</p>
@@ -169,7 +210,7 @@ function Main() {
           </div>
         </div>
       </div>
-      {isModalOpen && <Modal onClose={closeModal} boxNumber={modalContent} />}
+      {isModalOpen && <Modal onClose={closeModal} boxNumber={modalContent} boxDate={modalNumContent} />}
     </div>
   );
 }
