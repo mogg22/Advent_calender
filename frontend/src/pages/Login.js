@@ -30,7 +30,7 @@ function Login() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://3.37.110.13:8080/api/users/login", loginData, {
+      const response = await axios.post("https://wiscom2023.store/api/users/login", loginData, {
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",
