@@ -19,7 +19,7 @@ function Register() {
 
   const handleSignUp = async () => {
     try {
-      const response = await axios.post("http://localhost:8080/api/users/signup", formData, {
+      const response = await axios.post("http://3.37.110.13:8080/api/users/signup", formData, {
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",

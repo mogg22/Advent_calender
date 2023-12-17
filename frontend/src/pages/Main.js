@@ -50,7 +50,7 @@ function Main() {
           return;
         }
 
-        const response = await axios.get("http://localhost:8080/api/users/user-info", {
+        const response = await axios.get("http://3.37.110.13:8080/api/users/user-info", {
           withCredentials: true,
         });
 
@@ -66,7 +66,7 @@ function Main() {
   useEffect(() => {
     const fetchApiDates = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/users/readposts", {
+        const response = await axios.get("http://3.37.110.13:8080/api/users/readposts", {
           withCredentials: true,
         });
 
@@ -87,7 +87,7 @@ function Main() {
           return;
         }
 
-        const response = await axios.get("http://localhost:8080/api/users/user-info", {
+        const response = await axios.get("http://3.37.110.13:8080/api/users/user-info", {
           withCredentials: true,
         });
 
