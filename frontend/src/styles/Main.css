@@ -93,11 +93,27 @@
   margin: -0.37vh;
 }
 
+.box.box-24 {
+  background-image: url("../img/redbox.png");
+}
+
+.box.box-25 {
+  background-image: url("../img/greenbox.png");
+}
+
 .box p {
   font-family: "Alumni Sans Collegiate One", sans-serif;
   color: #301c19;
   font-size: 2.7em;
   padding-top: 0.7vh;
+}
+
+.box.box-24 p {
+  color: #850000;
+}
+
+.box.box-25 p {
+  color: #1e5000;
 }
 
 .box {

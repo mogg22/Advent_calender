@@ -190,7 +190,7 @@ function Main() {
                   {chunkedBoxNumbers.map((row, rowIndex) => (
                     <div key={rowIndex} className="box-row">
                       {row.map((number) => (
-                        <div key={number} className={`box ${isBoxOpened(number) ? "box-opened" : ""} ${canOpenBox(number) ? "can-box-open" : ""} ${getBoxClass(number)}`} onClick={() => openModal(number)}>
+                        <div key={number} className={`box ${isBoxOpened(number) ? "box-opened" : ""} ${canOpenBox(number) ? "can-box-open" : ""} ${getBoxClass(number)} ${number === 24 ? "box-24" : ""} ${number === 25 ? "box-25" : ""}`} onClick={() => openModal(number)}>
                           <div className="box-date">
                             <div className="box-content-container">{getBoxContent(number)}</div>
                             <p>{number}</p>
