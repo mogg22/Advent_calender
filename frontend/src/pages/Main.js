@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Main_Header from "../components/Main_Header";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../components/Modal";
 import "../styles/Main.css";
 
@@ -16,7 +16,9 @@ function Main() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  const [modalNumContent, setModalNumContent] = useState(null);
   const [currentDate, setCurrentDate] = useState("");
+  const [apiDates, setApiDates] = useState([]);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -27,6 +29,7 @@ function Main() {
   const [userToken, setUserToken] = useState(accessToken);
   const [userOrnamentOrder, setUserOrnamentOrder] = useState([]);
   const [openedBoxes, setOpenedBoxes] = useState([]);
+  const [ticketCount, setTicketCount] = useState(0);
 
   useEffect(() => {
     const getCurrentDate = () => {
@@ -47,7 +50,7 @@ function Main() {
           return;
         }
 
-        const response = await axios.get("http://localhost:8080/api/users/user-info", {
+        const response = await axios.get("https://wiscom2023.store/api/users/user-info", {
           withCredentials: true,
         });
 
@@ -60,20 +63,108 @@ function Main() {
     fetchUserInfo();
   }, [userToken]);
 
-  const isBoxOpened = (boxNumber) => openedBoxes.includes(boxNumber);
+  useEffect(() => {
+    const fetchApiDates = async () => {
+      try {
+        const response = await axios.get("https://wiscom2023.store/api/users/readposts", {
+          withCredentials: true,
+        });
+
+        setApiDates(response.data.map((post) => post.date));
+      } catch (error) {
+        console.error("Error fetching API dates", error);
+      }
+    };
+
+    fetchApiDates();
+  }, []);
+
+  useEffect(() => {
+    const fetchTicketCount = async () => {
+      try {
+        if (!userToken) {
+          console.error("Access token is missing");
+          return;
+        }
+
+        const response = await axios.get("https://wiscom2023.store/api/users/user-info", {
+          withCredentials: true,
+        });
+
+        // ticketCount 상태 업데이트
+        setTicketCount(response.data.ticket);
+      } catch (error) {
+        console.error("Error fetching ticket count", error);
+      }
+    };
+
+    fetchTicketCount();
+  }, [userToken]);
+
+  const isToday = (boxNumber) => {
+    const today = new Date();
+    const dayOfMonth = today.getDate();
+    return dayOfMonth === boxNumber;
+  };
+
+  // 현재 날짜에 따라 상자가 열리는지 확인
+  const isBoxOpened = (boxNumber) => {
+    const today = new Date();
+    const dayOfMonth = today.getDate();
+
+    // 현재 날짜의 상자만 열리도록 확인
+    return dayOfMonth === boxNumber && openedBoxes.includes(boxNumber);
+  };
+
+  const getBoxClass = (boxNumber) => {
+    // 서버에서 받아온 날짜 목록에 해당 상자의 날짜가 포함되어 있으면 투명도를 0으로, 그렇지 않으면 1로 설정
+    return apiDates && apiDates.includes(boxNumber) ? "written-date" : "";
+  };
+
+  const getBoxContent = (boxNumber) => {
+    // 작성된 날짜에 해당하는 박스에 이미지 표시
+    if (apiDates.includes(boxNumber)) {
+      const imageIndex = userOrnamentOrder.indexOf(boxNumber) + 1;
+      return <img src={ornamentImages[imageIndex]} alt={`ornament-${imageIndex}`} />;
+    }
+  };
+
+  const canOpenBox = (boxNumber) => {
+    const today = new Date();
+    const isToday = boxNumber === today.getDate();
+    const isPastDate = boxNumber <= today.getDate();
+    return (isToday || (ticketCount > 0 && !apiDates.includes(boxNumber))) && isPastDate;
+  };
 
   const openModal = (boxNumber) => {
-    setIsModalOpen(true);
+    if (isToday && apiDates.includes(boxNumber)) {
+      return;
+    }
 
-    const imageIndex = userOrnamentOrder.indexOf(boxNumber) + 1;
+    // 박스를 열 수 있는지 확인
+    const canOpen = canOpenBox(boxNumber);
+    const boxDate = boxNumber;
 
-    setModalContent(ornamentImages[imageIndex]);
-    setOpenedBoxes([...openedBoxes, boxNumber]);
+    if (canOpen) {
+      setIsModalOpen(true);
+
+      const imageIndex = userOrnamentOrder.indexOf(boxNumber) + 1;
+
+      // setModalContent({
+      //   image: ornamentImages[imageIndex],
+      //   boxNumber: boxNumber,
+      // });
+
+      setModalContent(ornamentImages[imageIndex]);
+      setModalNumContent(boxDate);
+      setOpenedBoxes([...openedBoxes, boxNumber]);
+    }
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
     setModalContent(null);
+    setModalNumContent(null);
   };
 
   // 페이지 간 이동 시에도 토큰을 전달하도록 navigate 함수 사용
@@ -99,10 +190,12 @@ function Main() {
                   {chunkedBoxNumbers.map((row, rowIndex) => (
                     <div key={rowIndex} className="box-row">
                       {row.map((number) => (
-                        <div key={number} className={`box ${isBoxOpened(number) ? "box-opened" : ""}`} onClick={() => openModal(number)}>
-                          <p>{number}</p>
-                          {/* {isBoxOpened(number) && <img src={ornamentImages[userOrnamentOrder.indexOf(number)]} alt={`ornament-${number}`} />} */}
-                          {isBoxOpened}
+                        <div key={number} className={`box ${isBoxOpened(number) ? "box-opened" : ""} ${canOpenBox(number) ? "can-box-open" : ""} ${getBoxClass(number)} ${number === 24 ? "box-24" : ""} ${number === 25 ? "box-25" : ""}`} onClick={() => openModal(number)}>
+                          <div className="box-date">
+                            <div className="box-content-container">{getBoxContent(number)}</div>
+                            <p>{number}</p>
+                          </div>
+                          {isBoxOpened(number)}
                         </div>
                       ))}
                     </div>
@@ -117,7 +210,7 @@ function Main() {
           </div>
         </div>
       </div>
-      {isModalOpen && <Modal onClose={closeModal} boxNumber={modalContent} />}
+      {isModalOpen && <Modal onClose={closeModal} boxNumber={modalContent} boxDate={modalNumContent} />}
     </div>
   );
 }

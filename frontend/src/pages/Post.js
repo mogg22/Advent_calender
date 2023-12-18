@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import Post_Header from "../components/Post_Header";
@@ -13,8 +13,33 @@ function Post() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // 이전 페이지에서 전달받은 토큰 값을 추출
-  const { accessToken } = location.state || { accessToken: null };
+  // 이전 페이지에서 전달받은 토큰과 boxNumber 값을 추출
+  const { accessToken, boxNumber, boxDate } = location.state || { accessToken: null, boxNumber: null, boxDate: null };
+
+  const [userToken, setUserToken] = useState(accessToken);
+  const [ticketCount, setTicketCount] = useState(0);
+
+  useEffect(() => {
+    const fetchTicketCount = async () => {
+      try {
+        if (!userToken) {
+          console.error("Access token is missing");
+          return;
+        }
+
+        const response = await axios.get("https://wiscom2023.store/api/users/user-info", {
+          withCredentials: true,
+        });
+
+        // ticketCount 상태 업데이트
+        setTicketCount(response.data.ticket);
+      } catch (error) {
+        console.error("Error fetching ticket count", error);
+      }
+    };
+
+    fetchTicketCount();
+  }, [userToken]);
 
   const getCurrentDate = () => {
     const now = new Date();
@@ -35,7 +60,35 @@ function Post() {
     const currentDate = `${year}-${month}-${formattedDay}`;
 
     try {
-      const response = await axios.post(`http://localhost:8080/api/users/post/${formattedDay}`, postData, {
+      // 이 부분에서 티켓 사용 여부를 체크
+      const today = new Date();
+      const formattedDay = parseInt(day, 10);
+      const isToday = formattedDay === today.getDate();
+      const isPastDate = boxDate < today.getDate();
+      const canUseTicket = ticketCount > 0; // ticketCount는 티켓 개수
+
+      // 티켓 사용 여부에 따라 API URL 결정
+      let apiUrl = null;
+
+      if (canUseTicket && isPastDate) {
+        // 티켓이 있고 과거 날짜인 경우 (티켓을 사용하여 과거 오너먼트에 작성)
+        apiUrl = `https://wiscom2023.store/api/users/ticket/post/${boxDate}`;
+      } else if (canUseTicket && isToday) {
+        // 티켓이 있고 오늘인 경우 (티켓을 사용하지 않고 오늘 날짜에 작성)
+        apiUrl = `https://wiscom2023.store/api/users/post/${formattedDay}`;
+      } else if (!canUseTicket && isToday) {
+        // 티켓이 없고 오늘인 경우 (오늘 날짜에 작성)
+        apiUrl = `https://wiscom2023.store/api/users/post/${formattedDay}`;
+      }
+
+      // console.log("API URL:", apiUrl);
+
+      if (!apiUrl) {
+        console.error("Invalid API URL");
+        return;
+      }
+
+      const response = await axios.post(apiUrl, postData, {
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",
@@ -46,7 +99,7 @@ function Post() {
       console.log(response.data);
 
       // main 페이지로 navigate 할 때 accessToken을 전달
-      navigate("/main", { state: { accessToken } });
+      navigate("/main", { state: { accessToken, ticketCount } });
     } catch (error) {
       // 오류 처리
       console.error("Error submitting post:", error);

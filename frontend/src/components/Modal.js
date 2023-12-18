@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../styles/Modal.css";
 
-function Modal({ onClose, boxNumber }) {
+function Modal({ onClose, boxNumber, boxDate }) {
   const [ornamentImage, setOrnamentImage] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,11 +19,11 @@ function Modal({ onClose, boxNumber }) {
 
       // 1.5초 후에 "/main/post"로 리다이렉트
       // accessToken을 state로 전달
-      navigate("/main/post", { state: { accessToken } });
+      navigate("/main/post", { state: { accessToken, boxNumber, boxDate } });
     }, 1500);
 
     return () => clearTimeout(timeoutId);
-  }, [onClose, boxNumber, navigate]);
+  }, [onClose, boxNumber, boxDate, navigate]);
 
   return (
     <div className="modal-overlay">
