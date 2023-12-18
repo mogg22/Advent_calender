@@ -112,10 +112,10 @@ function Post() {
         <div className="center">
           <div className="post-content">
             <Post_Header />
-            <div className="ribbon">
-              <img src={ribbon} alt="리본" />
-            </div>
             <div className="white-door-post">
+              <div className="ribbon">
+                <img src={ribbon} alt="리본" />
+              </div>
               <div className="post-title">
                 <p>이야기를 담아주세요</p>
               </div>
