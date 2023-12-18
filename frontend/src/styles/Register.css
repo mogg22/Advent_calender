@@ -9,8 +9,8 @@
     background-image: url("../img/background.png");
     background-size: cover;
     background-position: center;
-    height: 100vh;
-    min-height: 844px;
+    width: 95%;
+    position: fixed;
     display: flex;
     justify-content: center;
 }
