@@ -10,6 +10,7 @@ function Post() {
     content: "",
   });
 
+  const [ornamentImage, setOrnamentImage] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -18,6 +19,11 @@ function Post() {
 
   const [userToken, setUserToken] = useState(accessToken);
   const [ticketCount, setTicketCount] = useState(0);
+
+  useEffect(() => {
+    // 박스 번호에 해당하는 이미지 설정
+    setOrnamentImage(boxNumber || "/path/to/default/image"); // 만약 boxNumber가 falsy하면 기본 이미지 경로를 사용합니다
+  }, [boxNumber]);
 
   useEffect(() => {
     const fetchTicketCount = async () => {
@@ -114,7 +120,7 @@ function Post() {
             <Post_Header />
             <div className="white-door-post">
               <div className="ribbon">
-                <img src={ribbon} alt="리본" />
+                <img src={ornamentImage || ribbon} alt="리본" />
               </div>
               <div className="post-title">
                 <p>이야기를 담아주세요</p>
