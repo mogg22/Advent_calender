@@ -27,7 +27,7 @@ function Post() {
           return;
         }
 
-        const response = await axios.get("https://wiscom2023.store/api/users/user-info", {
+        const response = await axios.get("http://localhost:8080/api/users/user-info", {
           withCredentials: true,
         });
 
@@ -72,13 +72,13 @@ function Post() {
 
       if (canUseTicket && isPastDate) {
         // 티켓이 있고 과거 날짜인 경우 (티켓을 사용하여 과거 오너먼트에 작성)
-        apiUrl = `https://wiscom2023.store/api/users/ticket/post/${boxDate}`;
+        apiUrl = `http://localhost:8080/api/users/ticket/post/${boxDate}`;
       } else if (canUseTicket && isToday) {
         // 티켓이 있고 오늘인 경우 (티켓을 사용하지 않고 오늘 날짜에 작성)
-        apiUrl = `https://wiscom2023.store/api/users/post/${formattedDay}`;
+        apiUrl = `http://localhost:8080/api/users/post/${formattedDay}`;
       } else if (!canUseTicket && isToday) {
         // 티켓이 없고 오늘인 경우 (오늘 날짜에 작성)
-        apiUrl = `https://wiscom2023.store/api/users/post/${formattedDay}`;
+        apiUrl = `http://localhost:8080/api/users/post/${formattedDay}`;
       }
 
       // console.log("API URL:", apiUrl);
