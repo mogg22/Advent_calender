@@ -1,26 +1,28 @@
-import plus from "../img/plus.png";
-
-function Plus({ onClick }) {
+function Plus({ image, isVisible }) {
+    const imagescr = isVisible
+    ? require(`../img/ornament_big${image}.png`).default
+    : require(`../img/ornament_big1.png`).default;
+    
     return (
-        <div 
-        onClick={onClick}
+        <div
             style={{
-                width: "60px",
-                height: "60px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+            width: "60px",
+            height: "60px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
             }}
         >
             <img
-                src={plus}
-                style={{
-                    width: "18px",
-                    height: "18px",
-                }}  
+            src={imagescr}
+            style={{
+                height: "60px",
+            }}
+            alt='오너먼트'
             />
         </div>
     );
 }
-
+    
 export default Plus;
+    
