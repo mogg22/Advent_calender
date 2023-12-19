@@ -124,7 +124,12 @@ function Main() {
   const getBoxContent = (boxNumber) => {
     // 작성된 날짜에 해당하는 박스에 이미지 표시
     if (apiDates.includes(boxNumber)) {
-      const imageIndex = userOrnamentOrder.indexOf(boxNumber) + 1;
+      // userOrnamentOrder 배열에서 해당 상자 번호에 대한 오너먼트 값 찾기
+      const ornamentForBox = userOrnamentOrder.find((ornament, index) => index + 1 === boxNumber);
+
+      // 해당 오너먼트 값에 1을 더해서 이미지 인덱스 계산
+      const imageIndex = ornamentForBox !== undefined ? ornamentForBox : 0;
+
       return <img src={ornamentImages[imageIndex]} alt={`ornament-${imageIndex}`} />;
     }
   };
@@ -148,7 +153,12 @@ function Main() {
     if (canOpen) {
       setIsModalOpen(true);
 
-      const imageIndex = userOrnamentOrder.indexOf(boxNumber) + 1;
+      // const imageIndex = userOrnamentOrder.indexOf(boxNumber) + 1;
+      // userOrnamentOrder 배열에서 해당 상자 번호에 대한 오너먼트 값 찾기
+      const ornamentForBox = userOrnamentOrder.find((ornament, index) => index + 1 === boxNumber);
+
+      // 해당 오너먼트 값에 1을 더해서 이미지 인덱스 계산
+      const imageIndex = ornamentForBox !== undefined ? ornamentForBox : 0;
 
       // setModalContent({
       //   image: ornamentImages[imageIndex],
