@@ -1,5 +1,5 @@
 .start-page {
-    background-color: #465C38;
+    background-color: #43576D;
     width: 100vw;
     height: 100vh;
     min-height: 844px;
@@ -31,23 +31,26 @@
 }
 
 .mypage-content {
-    background-image: url("../img/whitedoor_main.png") ;
-    background-size: contain;
+    background-color: #ffffff;
+    border-radius: 200px 200px 0 0;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    margin-top: 20px;
+    /* position: fixed; */
 
-    width: 180vw;
+    width: 300px;
     height: 100vh;
-    margin-top: 25px;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow-y: visible;
 }
 
 .title {
-    width: 30vw;
+    width: 20vw;
     height: 20vh;
     display: flex;
     flex-direction: column;
@@ -66,17 +69,41 @@
     margin: -10px;
 }
 
-.name, .password, .check, .tosend {
+.name, .tosend {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
+.pay {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.pay img {
+    width: 22px;
+    height: 22px;
+    padding-left: 5px;
+}
+
+.ticket {
+    width: 180px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ticket img{
+    width: 80px;
+}
+
 .mypage-content p {
     width: auto;
     box-sizing: border-box;
-    background-color: #a31b1f;
     border-radius: 30px;
     color: white;
     font-size: 12px;
@@ -101,7 +128,7 @@
     overflow: visible;  
 }
 
-.tosend p {
+.pay p, .tosend p {
     background-color: #1E5000;
 }
 
