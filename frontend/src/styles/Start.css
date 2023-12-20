@@ -32,17 +32,18 @@
 
 .start-content {
   background-image: url("../img/whitedoor_main.png");
-  background-size: contain;
+  background-size: auto 100%;
   background-position: center;
   background-repeat: no-repeat;
+  width: 60vw;
+  margin-top: 20px;
+  position: fixed;
 
-  width: 80vw;
-  height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  /* margin-top: 50px; */
+  align-items: center;
 }
-
 
 .start-bg {
   background-image: url("../img/tree_main.png") ;
@@ -53,7 +54,7 @@
   width: 100vw;
   height: 83vh;
   margin-top: 100px;
-  margin-right: 18px;
+  margin-right: 25px;
 
   display: flex;
   flex-direction: column;

@@ -31,14 +31,16 @@
 }
 
 .register-content {
-    background-image: url("../img/whitedoor_main.png") ;
-    background-size: contain;
+    background-color: #ffffff;
+    border-radius: 200px 200px 0 0;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    margin-top: 20px;
+    position: fixed;
 
-    width: 180vw;
+    width: 320px;
     height: 100vh;
-    margin-top: 25px;
 
     display: flex;
     flex-direction: column;
