@@ -43,26 +43,26 @@ function Register() {
       <div className="page-bg">
         <div className="center">
           <div className="register-content">
-            <div className="title">
+            <div className="register-title">
               <img src={Title} />
             </div>
             <div className="nickname">
               <p>닉네임</p>
-              <input className="blank" type="text" name="nickname" onChange={handleInputChange} />
+              <input className="r-blank" type="text" name="nickname" onChange={handleInputChange} placeholder="닉네임" />
             </div>
             <div className="password">
               <p>비밀번호</p>
-              <input className="blank" type="password" name="password" onChange={handleInputChange} />
+              <input className="r-blank" type="password" name="password" onChange={handleInputChange} placeholder="비밀번호" />
             </div>
             <div className="check">
               <p>비밀번호 확인</p>
-              <input className="blank" type="password" name="password2" onChange={handleInputChange} />
+              <input className="r-blank" type="password" name="password2" onChange={handleInputChange} placeholder="비밀번호 재입력" />
             </div>
             <div className="tosend">
               <p>누구에게 트리를 보낼까요?</p>
-              <input className="blank" type="text" name="receiver" onChange={handleInputChange} />
+              <input className="r-blank" type="text" name="receiver" onChange={handleInputChange} placeholder="받는 사람" />
             </div>
-            <div className="submit" onClick={handleSignUp}>
+            <div className="register-submit" onClick={handleSignUp}>
               <Link to="/">
                 <p>회원가입</p>
               </Link>

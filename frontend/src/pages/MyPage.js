@@ -44,39 +44,41 @@ function Mypage() {
   };
 
   return (
-    <div className="start-page">
+    <div className="my-page">
       <div className="page-bg">
         <div className="center">
-          <div className="mypage-content">
+          <div className="mypages">
             <Header />
-            <div className="title">
-              <img src={Title} />
-            </div>
-            <div className="name">
-              <div className="profile">
-                <img src={Profile} />
+            <div className="mypage-content">
+              <div className="mypage-title">
+                <img src={Title} />
               </div>
-              <p>username123</p>
-              {/* <input className="blank" type="text" name="nickname"/> */}
-              {/* <input className="blank" type="text" name="nickname" onChange={handleInputChange} /> */}
-            </div>
+              <div className="name">
+                <div className="profile">
+                  <img src={Profile} />
+                </div>
+                <p>username123</p>
+                {/* <input className="blank" type="text" name="nickname"/> */}
+                {/* <input className="blank" type="text" name="nickname" onChange={handleInputChange} /> */}
+              </div>
 
-            <div className="pay">
-              <p>이용권 구매</p>
-              <img src={Info} alt="이용권설명"/>
-            </div>
-            <div className="ticket">
-              <img src={Oneticket} alt="1장구매"/>
-              <img src={Twoticket} alt="2장구매"/>
-            </div>
-            <div className="tosend">
-              <p>누구에게 트리를 보낼까요?</p>
-              <input className="blank" type="text" name="receiver" />
-              {/* <input className="blank" type="text" name="receiver" onChange={handleInputChange} /> */}
-            </div>
-            <div className="submit">
-              {/* <div className="submit" onClick={handleSignUp}> */}
-              <p>수정하기</p>
+              <div className="pay">
+                <p>이용권 구매</p>
+                <img src={Info} alt="이용권설명" />
+              </div>
+              <div className="ticket">
+                <img src={Oneticket} alt="1장구매" />
+                <img src={Twoticket} alt="2장구매" />
+              </div>
+              <div className="tosend">
+                <p>누구에게 트리를 보낼까요?</p>
+                <input className="m-blank" type="text" name="receiver" placeholder="받는 사람 변경" />
+                {/* <input className="blank" type="text" name="receiver" onChange={handleInputChange} /> */}
+              </div>
+              <div className="submit">
+                {/* <div className="submit" onClick={handleSignUp}> */}
+                <p>수정하기</p>
+              </div>
             </div>
           </div>
         </div>

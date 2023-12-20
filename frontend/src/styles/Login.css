@@ -1,46 +1,18 @@
-.start-page {
-  background-color: #77514e;
-  width: 100vw;
-  height: 100vh;
-  min-height: 844px;
-}
-
-.page-bg {
-  background-image: url("../img/background.png");
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
-  min-height: 844px;
-  display: flex;
-  justify-content: center;
-}
-
-.center {
-  width: 100vw;
-  height: 100vh;
-  min-height: 844px;
-  background-color: rgb(255, 255, 255, 0.5);
-  display: flex;
-  justify-content: center;
-}
-
-@media (hover: hover) {
-  .center {
-    width: 390px;
-  }
-}
-
 .login-content {
   background-color: #ffffff;
   border-radius: 200px 200px 0 0;
-  background-size: cover;
+  /* background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
   margin-top: 20px;
   position: fixed;
+  bottom: 0;
 
-  width: 300px;
-  height: 100vh;
+  /* width: 300px; */
+  width: 95%;
+  /* height: 100vh; */
+  height: calc(83vh - 45px);
+  padding-top: 100px;
 
   display: flex;
   flex-direction: column;
@@ -48,14 +20,23 @@
   align-items: center;
 }
 
-.title {
+@media (hover: hover) {
+  .login-content {
+    width: calc(390px * 0.95);
+  }
+}
+
+.login-title {
   width: 30vw;
   height: 20vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 10px 0px 10px 0px;
+  /* margin: 20px 0px; */
+
+  padding-bottom: 15vh;
+  margin-top: -35vh;
 }
 
 .name,
@@ -67,7 +48,8 @@
 }
 
 label {
-  width: 83px;
+  /* width: 83px; */
+  width: 50%;
   box-sizing: border-box;
   background-color: #a31b1f;
   border-radius: 30px;
@@ -75,12 +57,12 @@ label {
   font-size: 12px;
   font-weight: bold;
   padding: 8px 20px;
-  margin: 20px 0px 18px 0px;
+  margin: 20px 0px;
   text-align: center;
 }
 
 .password label {
-  margin-top: 50px;
+  margin-top: 70px;
 }
 
 .blank {
@@ -90,7 +72,14 @@ label {
   outline: none;
 }
 
+.name .blank,
+.password .blank {
+  font-family: "Pretendard-Regular";
+  padding-bottom: 5px;
+}
+
 .login-content button {
+  font-family: "Pretendard-Regular";
   width: 83px;
   box-sizing: border-box;
   background-color: #002b5b;
@@ -98,7 +87,7 @@ label {
   font-size: 12px;
   font-weight: bold;
   padding: 8px 20px;
-  margin: 50px 0px 10px 0px;
+  margin: 70px 0px 10px 0px;
   text-align: center;
   border: none;
   cursor: pointer;
