@@ -60,7 +60,7 @@ function Tree() {
 
   const renderDateOrnaments = () => {
     const dateOrnaments = [];
-    posts.forEach((post, index) => {
+    posts.slice(0, 24).forEach((post, index) => {
       const ornamentIndex = ornamentOrder[post.date - 1];
       // console.log(post.date);
       // console.log(ornamentIndex);
