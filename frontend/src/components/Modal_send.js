@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import '../styles/Send.css';
 import stamp from '../img/stamp.png';
+import window1 from '../img/window1.png';
 
 function Modal_send({ setModalOpen,  accessToken }) {
     const modalRef = useRef(null);
@@ -48,7 +49,7 @@ function Modal_send({ setModalOpen,  accessToken }) {
             const daysLeft = calculateDaysLeft();
             return (
                 <>
-                    <div className='stamp'><img src={stamp} alt="스탬프" /></div>
+                    <div className='stamp'><img src={window1} alt="스탬프" style={{width:"125px", marginTop:"5px", marginBottom:"10px",}}/></div>
                     <div className='send-modal-message'>
                         <p>12월 25일에 보낼 수 있어요!</p>
                         <p>크리스마스를 기다리며 트리를 꾸며주세요!</p>
