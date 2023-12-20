@@ -96,6 +96,17 @@ function Tree() {
     navigate("/tree/post?image=24", { state: { accessToken, refreshToken, content: contentToPass } });
   };
 
+  useEffect(() => {
+    const setAuthorizationHeader = () => {
+      const storedToken = localStorage.getItem("accessToken");
+      if (storedToken) {
+        axios.defaults.headers.common["Authorization"] = storedToken;
+      }
+    };
+
+    setAuthorizationHeader();
+  }, []);
+
   return (
     <div className="tree-page">
       <div className="page-bg">

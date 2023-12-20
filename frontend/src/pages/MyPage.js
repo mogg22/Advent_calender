@@ -1,5 +1,5 @@
 // import Other_Header from "../components/Other_Header";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Mypage.css";
 import Header from "../components/Other_Header";
@@ -42,6 +42,17 @@ function Mypage() {
       console.error("Error registering user", error);
     }
   };
+
+  useEffect(() => {
+    const setAuthorizationHeader = () => {
+      const storedToken = localStorage.getItem("accessToken");
+      if (storedToken) {
+        axios.defaults.headers.common["Authorization"] = storedToken;
+      }
+    };
+
+    setAuthorizationHeader();
+  }, []);
 
   return (
     <div className="my-page">
