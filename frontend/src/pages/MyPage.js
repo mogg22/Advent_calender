@@ -85,4 +85,4 @@ function Mypage() {
   );
 }
 
-xport default Mypage;
+export default Mypage;
