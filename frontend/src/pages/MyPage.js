@@ -7,38 +7,38 @@ import Title from "../img/title.png";
 import Profile from "../img/profile.png";
 
 function Register() {
-  // const [formData, setFormData] = useState({
-  //   // nickname: "",
-  //   password: "",
-  //   password2: "",
-  //   receiver: "",
-  // });
+  const [formData, setFormData] = useState({
+    nickname: "",
+    password: "",
+    password2: "",
+    receiver: "",
+  });
 
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData({ ...formData, [name]: value });
-  // };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-  // const handleSignUp = async () => {
-  //   try {
-  //     const response = await axios.post("http://localhost:8080/api/users/signup", formData, {
-  //       withCredentials: true,
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
+  const handleSignUp = async () => {
+    try {
+      const response = await axios.post("http://localhost:8080/api/users/signup", formData, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-  //     if (response.status === 200) {
-  //       // Handle successful registration
-  //       console.log("User registered successfully");
-  //     } else {
-  //       // Handle registration failure
-  //       console.error("Error registering user");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error registering user", error);
-  //   }
-  // };
+      if (response.status === 200) {
+        // Handle successful registration
+        console.log("User registered successfully");
+      } else {
+        // Handle registration failure
+        console.error("Error registering user");
+      }
+    } catch (error) {
+      console.error("Error registering user", error);
+    }
+  };
 
   return (
     <div className="start-page">
