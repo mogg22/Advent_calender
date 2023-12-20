@@ -11,8 +11,8 @@ function Header() {
   const location = useLocation();
   const { accessToken } = location.state || { accessToken: null };
 
-  const handleMainLink = () => {
-    navigate("/main", { state: { accessToken } });
+  const handleGoBack = () => {
+    navigate(-1); // 이전 방문한 페이지로 이동
   };
 
   const handleMypageLink = () => {
@@ -22,8 +22,8 @@ function Header() {
   return (
     <div className="Header">
       <div className="hd-img">
-        <img src={back} alt="뒤로가기" onClick={handleMainLink} />
-        <img src={setting} alt="설정" onClick={handleMypageLink} />
+        <img src={back} alt="뒤로가기" onClick={handleGoBack} style={{cursor: "pointer",}}/>
+        <img src={setting} alt="설정" onClick={handleMypageLink} style={{cursor: "pointer",}}/>
       </div>
     </div>
   );

@@ -214,7 +214,7 @@ function Main() {
               </div>
             </div>
             {/* handleTreeLink 함수를 사용하여 페이지 간 이동 시 토큰 전달 */}
-            <div className="go-tree-btn" onClick={handleTreeLink}>
+            <div className="go-tree-btn" onClick={handleTreeLink} style={{cursor: "pointer",}}>
               <p>내 트리 보러가기</p>
             </div>
           </div>

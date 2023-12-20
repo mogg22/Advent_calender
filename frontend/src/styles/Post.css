@@ -82,3 +82,20 @@ input[type="submit"] {
 
   padding: 10px 30px;
 }
+
+.read-content {
+  width: 85%;
+  margin: 0 auto;
+}
+
+.read-content p {
+  width: 85%;
+  height: calc(50vh - 10px);
+  resize: none;
+  font-family: "Pretendard-Regular";
+  font-size: 18px;
+  padding: 20px;
+  vertical-align: top;
+  text-align: left;
+  border: none;
+}

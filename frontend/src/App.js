@@ -6,6 +6,7 @@ import MyPage from "./pages/MyPage";
 import Main from "./pages/Main";
 import Tree from "./pages/Tree";
 import Post from "./pages/Post";
+import TreePost from "./pages/TreePost";
 
 import "./styles/App.css";
 
@@ -25,6 +26,7 @@ function App() {
 
           {/* 트리 */}
           <Route exact path="/tree" element={<Tree />} />
+          <Route exact path="/tree/post" element={<TreePost />} />
         </Routes>
       </div>
     </BrowserRouter>

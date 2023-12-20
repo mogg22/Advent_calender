@@ -56,7 +56,7 @@ function Main_Header() {
     <div className="Header">
       <div className="hd-img">
         <div className="setting-ticket">
-          <img src={setting} alt="설정" onClick={handleMypageLink} />
+          <img src={setting} alt="설정" onClick={handleMypageLink} style={{cursor: "pointer",}}/>
           <div className="ticket-box">
             <div className="ticket-img">
               <img src={ticket} alt="티켓" />
@@ -64,7 +64,7 @@ function Main_Header() {
             <p>{ticketCount}</p>
           </div>
         </div>
-        <img src={logout} alt="로그아웃" onClick={handleLogout} />
+        <img src={logout} alt="로그아웃" onClick={handleLogout} style={{cursor: "pointer",}}/>
       </div>
     </div>
   );
