@@ -32,7 +32,12 @@ function TreePost() {
             <div className="center">
             <div className="post-content">
                 <Header />
-                <div className="white-door-post">
+                <div 
+                    className="white-door-post"
+                    style={{
+                        height: "80%",
+                    }}
+                >
                 <div className="ribbon">
                     <img src={ornamentImages[image]} alt="리본" />
                 </div>

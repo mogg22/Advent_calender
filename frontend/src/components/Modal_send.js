@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import '../styles/Send.css';
 import stamp from '../img/stamp.png';
 
-function Modal_send({ setModalOpen }) {
+function Modal_send({ setModalOpen,  accessToken }) {
     const modalRef = useRef(null);
 
     useEffect(() => {
@@ -26,19 +26,18 @@ function Modal_send({ setModalOpen }) {
     useEffect(() => {
         const url = window.location.href;
         setCurrentUrl(url);
-        return () => {
-        };
     }, []);
+
 
     const isBeforeChristmas = () => {
         const currentDate = new Date();
-        const christmasDate = new Date(currentDate.getFullYear(), 11, 25); // 11은 12월을 나타냅니다 (0부터 시작)
+        const christmasDate = new Date(currentDate.getFullYear(), 11, 25);
         return currentDate < christmasDate;
     };
 
     const calculateDaysLeft = () => {
         const currentDate = new Date();
-        const christmasDate = new Date(currentDate.getFullYear(), 11, 25); // 11은 12월을 나타냅니다 (0부터 시작)
+        const christmasDate = new Date(currentDate.getFullYear(), 11, 25);
         const timeDifference = christmasDate - currentDate;
         const daysLeft = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
         return daysLeft;
@@ -54,7 +53,7 @@ function Modal_send({ setModalOpen }) {
                         <p>12월 25일에 보낼 수 있어요!</p>
                         <p>크리스마스를 기다리며 트리를 꾸며주세요!</p>
                     </div>
-                    <div className='link-area'><p style={{width:"85px", margin: "0 auto",}}>{daysLeft}일 남았어요.</p></div>
+                    <div className='link-area'><p style={{margin: "0 auto", textAlign: "center", fontSize: "14px", }}>{daysLeft}일 남았어요!</p></div>
                 </>
             );
         } else {
