@@ -1,108 +1,101 @@
-.start-page {
-    background-color: #77514e;
-    width: 100vw;
-    height: 100vh;
-    min-height: 844px;
-}
+.register-content {
+  background-color: #ffffff;
+  border-radius: 200px 200px 0 0;
+  /* background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; */
+  margin-top: 20px;
+  position: fixed;
+  bottom: 0;
 
-.page-bg {
-    background-image: url("../img/background.png");
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    min-height: 844px;
-    display: flex;
-    justify-content: center;
-}
+  /* width: 300px; */
+  width: 95%;
+  /* height: 100vh; */
+  height: calc(83vh - 45px);
+  padding-top: 100px;
 
-.center {
-    width: 100vw;
-    height: 100vh;
-    min-height: 844px;
-    background-color: rgb(255, 255, 255, 0.5);
-    display: flex;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 @media (hover: hover) {
-    .center {
-    width: 390px;
-    }
+  .register-content {
+    width: calc(390px * 0.95);
+  }
 }
 
-.register-content {
-    background-color: #ffffff;
-    border-radius: 200px 200px 0 0;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    margin-top: 20px;
-    position: fixed;
+.register-title {
+  width: 30vw;
+  height: 20vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* margin: 10px 0px 10px 0px; */
 
-    width: 300px;
-    height: 100vh;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  padding-bottom: 5vh;
+  margin-top: -25vh;
 }
 
-.title {
-    width: 30vw;
-    height: 20vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 10px 0px 10px 0px;
-}
-
-.nickname, .password, .check, .tosend{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.nickname,
+.password,
+.check,
+.tosend {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .register-content p {
-    width: auto;
-    box-sizing: border-box;
-    background-color: #a31b1f;
-    border-radius: 30px;
-    color: white;
-    font-size: 12px;
-    font-weight: bold;
-    padding: 8px 20px;
-    margin: 20px 0px 20px 0px;
-    text-align: center;
-    white-space: nowrap;
-    overflow: visible;  
+  width: auto;
+  box-sizing: border-box;
+  background-color: #a31b1f;
+  border-radius: 30px;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 8px 20px;
+  margin: 30px 0px 20px 0px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: visible;
 }
 
 .tosend p {
-    background-color: #1E5000;
+  background-color: #1e5000;
 }
 
-.blank {
-    width: 80%;
-    border: none;
-    border-bottom: 1px solid #000;
-    outline: none; 
-    margin-bottom: 5px;
+.r-blank {
+  width: 80%;
+  border: none;
+  border-bottom: 1px solid #000;
+  outline: none;
+  margin-bottom: 5px;
 }
 
-.submit p{
-    width: 83px;
-    box-sizing: border-box;
-    border-radius: 0px;
-    background-color: #002B5B;
-    color: white;
-    font-size: 12px;
-    font-weight: bold;
-    padding: 8px 20px;
-    margin: 20px 0px 70px 0px;
-    text-align: center;
-    border: none;
-    cursor: pointer;
+.nickname .r-blank,
+.password .r-blank,
+.check .r-blank,
+.tosend .r-blank {
+  font-family: "Pretendard-Regular";
+  padding-bottom: 5px;
+}
+
+.register-submit p {
+  width: 83px;
+  box-sizing: border-box;
+  border-radius: 0px;
+  background-color: #002b5b;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 8px 20px;
+  /* margin: 50px 0px 70px 0px; */
+  margin-top: 50px;
+  text-align: center;
+  border: none;
+  cursor: pointer;
 }

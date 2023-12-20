@@ -67,16 +67,16 @@ function Login() {
       <div className="page-bg">
         <div className="center">
           <div className="login-content">
-            <div className="title">
+            <div className="login-title">
               <img src={Title} />
             </div>
             <div className="name">
               <label>닉네임</label>
-              <input className="blank" type="text" name="nickname" onChange={handleInputChange} />
+              <input className="blank" type="text" name="nickname" onChange={handleInputChange} placeholder="닉네임" />
             </div>
             <div className="password">
               <label>비밀번호</label>
-              <input className="blank" type="password" name="password" onChange={handleInputChange} />
+              <input className="blank" type="password" name="password" onChange={handleInputChange} placeholder="비밀번호" />
             </div>
             <button onClick={handleLogin}>로그인</button>
           </div>
