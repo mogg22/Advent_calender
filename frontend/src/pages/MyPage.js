@@ -60,6 +60,7 @@ function Mypage() {
               {/* <input className="blank" type="text" name="nickname"/> */}
               {/* <input className="blank" type="text" name="nickname" onChange={handleInputChange} /> */}
             </div>
+
             <div className="pay">
               <p>이용권 구매</p>
               <img src={Info} alt="이용권설명"/>
@@ -74,7 +75,7 @@ function Mypage() {
               {/* <input className="blank" type="text" name="receiver" onChange={handleInputChange} /> */}
             </div>
             <div className="submit">
-            {/* <div className="submit" onClick={handleSignUp}> */}
+              {/* <div className="submit" onClick={handleSignUp}> */}
               <p>수정하기</p>
             </div>
           </div>
@@ -84,4 +85,4 @@ function Mypage() {
   );
 }
 
-export default Mypage;
+xport default Mypage;

@@ -12,6 +12,7 @@ function Header() {
 
   const location = useLocation();
   const { accessToken } = location.state || { accessToken: null };
+  const { refreshToken } = location.state || { refreshToken: null };
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -29,7 +30,7 @@ function Header() {
   }, []);
 
   const handleMainLink = () => {
-    navigate("/main", { state: { accessToken } });
+    navigate("/main", { state: { accessToken, refreshToken } });
   };
 
   return (

@@ -15,11 +15,12 @@ function Login() {
   // 이펙트를 사용하여 기존에 저장된 토큰이 있는지 확인
   useEffect(() => {
     const existingToken = localStorage.getItem("accessToken");
+    const existingrefreshToken = localStorage.getItem("refreshToken");
 
     if (existingToken) {
       // Authorization 헤더를 설정하고 메인 페이지로 이동
       axios.defaults.headers.common["Authorization"] = `${existingToken}`;
-      navigate("/main", { state: { accessToken: existingToken } });
+      navigate("/main", { state: { accessToken: existingToken, refreshToken: existingrefreshToken } });
     }
   }, [navigate]);
 
@@ -45,12 +46,13 @@ function Login() {
 
         // 로컬 스토리지에 토큰 저장
         localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
 
         // Axios의 기본 헤더에 accessToken 추가
         axios.defaults.headers.common["Authorization"] = `${accessToken}`;
 
         // 메인 페이지로 리다이렉트
-        navigate("/main", { state: { accessToken } });
+        navigate("/main", { state: { accessToken, refreshToken } });
       } else {
         // 로그인 실패 시 처리
         console.error("Error logging in");
