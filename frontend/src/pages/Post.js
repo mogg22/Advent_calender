@@ -15,7 +15,7 @@ function Post() {
   const location = useLocation();
 
   // 이전 페이지에서 전달받은 토큰과 boxNumber 값을 추출
-  const { accessToken, boxNumber, boxDate } = location.state || { accessToken: null, boxNumber: null, boxDate: null };
+  const { accessToken, refreshToken, boxNumber, boxDate } = location.state || { accessToken: null, refreshToken: null, boxNumber: null, boxDate: null };
 
   const [userToken, setUserToken] = useState(accessToken);
   const [ticketCount, setTicketCount] = useState(0);
@@ -105,7 +105,7 @@ function Post() {
       console.log(response.data);
 
       // main 페이지로 navigate 할 때 accessToken을 전달
-      navigate("/main", { state: { accessToken, ticketCount } });
+      navigate("/main", { state: { accessToken, refreshToken, ticketCount } });
     } catch (error) {
       // 오류 처리
       console.error("Error submitting post:", error);
