@@ -24,6 +24,7 @@ function Main() {
   const navigate = useNavigate();
 
   const { accessToken } = location.state || { accessToken: null };
+  const { refreshToken } = location.state || { refreshToken: null };
 
   // accessToken을 state로 관리
   const [userToken, setUserToken] = useState(accessToken);
@@ -43,11 +44,28 @@ function Main() {
   }, []);
 
   useEffect(() => {
+    const fetchToken = async () => {
+      try {
+        const responseRe = await axios.post("http://localhost:8080/api/users/reissue-token", {
+          withCredentials: true,
+        });
+
+        const newAccessToken = responseRe.data.accessToken;
+        return newAccessToken;
+      } catch (error) {
+        console.error("Error refreshing token", error);
+        throw error; // 에러를 상위로 던져서 처리할 수 있도록 함
+      }
+    };
+
     const fetchUserInfo = async () => {
       try {
+        let tokenToUse = userToken;
+
         if (!userToken) {
-          console.error("Access token is missing");
-          return;
+          // userToken이 없다면 refreshToken으로 새로운 토큰 발급
+          tokenToUse = await fetchToken();
+          axios.defaults.headers.common["Authorization"] = `${tokenToUse}`;
         }
 
         const response = await axios.get("http://localhost:8080/api/users/user-info", {
@@ -179,8 +197,19 @@ function Main() {
 
   // 페이지 간 이동 시에도 토큰을 전달하도록 navigate 함수 사용
   const handleTreeLink = () => {
-    navigate("/tree", { state: { accessToken } });
+    navigate("/tree", { state: { accessToken, refreshToken } });
   };
+
+  useEffect(() => {
+    const setAuthorizationHeader = () => {
+      const storedToken = localStorage.getItem("accessToken");
+      if (storedToken) {
+        axios.defaults.headers.common["Authorization"] = storedToken;
+      }
+    };
+
+    setAuthorizationHeader();
+  }, []);
 
   return (
     <div className="main-page">
@@ -214,7 +243,7 @@ function Main() {
               </div>
             </div>
             {/* handleTreeLink 함수를 사용하여 페이지 간 이동 시 토큰 전달 */}
-            <div className="go-tree-btn" onClick={handleTreeLink} style={{cursor: "pointer",}}>
+            <div className="go-tree-btn" onClick={handleTreeLink} style={{ cursor: "pointer" }}>
               <p>내 트리 보러가기</p>
             </div>
           </div>

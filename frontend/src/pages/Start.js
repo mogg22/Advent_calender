@@ -5,7 +5,7 @@ import Title from "../img/title.png";
 function Start() {
   return (
     <div className="start-page">
-      <div className="white-door">
+      <div className="page-bg">
         <div className="center">
           <div className="start-content">
             <div className="start-bg">

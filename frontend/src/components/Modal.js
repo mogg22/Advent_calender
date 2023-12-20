@@ -9,6 +9,7 @@ function Modal({ onClose, boxNumber, boxDate }) {
 
   // 이전 페이지에서 전달받은 토큰 값을 추출
   const { accessToken } = location.state || { accessToken: null };
+  const { refreshToken } = location.state || { refreshToken: null };
 
   useEffect(() => {
     // 박스 번호에 해당하는 이미지 설정
@@ -19,7 +20,7 @@ function Modal({ onClose, boxNumber, boxDate }) {
 
       // 1.5초 후에 "/main/post"로 리다이렉트
       // accessToken을 state로 전달
-      navigate("/main/post", { state: { accessToken, boxNumber, boxDate } });
+      navigate("/main/post", { state: { accessToken, refreshToken, boxNumber, boxDate } });
     }, 1500);
 
     return () => clearTimeout(timeoutId);
