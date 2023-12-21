@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Modal_send from "../components/Modal_send";
 import Header from "../components/Header";
 import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import "../styles/Tree.css";
 import Plus from "../components/Plus";
 import before from "../img/before.png";
@@ -29,32 +29,58 @@ function Tree() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const searchParams = new URLSearchParams(location.search);
+  const nicknameParam = searchParams.get('nickname');
+
+  useEffect(() => {
+    if (nicknameParam) {
+      // console.log('Nickname:', nicknameParam);
+      // 여기서 필요한 작업을 수행하면 됩니다.
+    }
+  }, [location.search]);
+  
   const { accessToken } = location.state || { accessToken: null };
   const { refreshToken } = location.state || { refreshToken: null };
 
   useEffect(() => {
     const fetchOrnamentOrder = async () => {
       try {
-        console.log("Fetching user information...");
-        const response = await axios.get("http://localhost:8080/api/users/user-info", {
-          withCredentials: true,
-        });
 
-        setOrnamentOrder(response.data.ornament);
-        setReceiver(response.data.receiver);
-        //console.log(response.data.ornament);
+        let postsResponse;
 
-        const postsResponse = await axios.get("http://localhost:8080/api/users/readposts", {
-          withCredentials: true,
-        });
+        if (accessToken) {
+          // 토큰 있을 때
+          console.log("토큰 있을 때");
+          const response = await axios.get("http://localhost:8080/api/users/user-info", {
+            withCredentials: true,
+          });
+      
+          setOrnamentOrder(response.data.ornament);
+          setReceiver(response.data.receiver);
+
+          postsResponse = await axios.get("http://localhost:8080/api/users/readposts", {
+            withCredentials: true,
+          });
+        } else {
+          // 토큰 없을 때
+          console.log("토큰 없을 때");
+          postsResponse = await axios.get(`http://localhost:8080/api/users/readposts/${nicknameParam}`, {
+            withCredentials: true,
+          });
+          // console.log(postsResponse.data);
+          setOrnamentOrder(postsResponse.data.ornament);
+          setReceiver(postsResponse.data.receiver);
+        }
         // date 속성이 있는 게시물을 필터링
-        const postsWithDate = postsResponse.data.filter((post) => post.date);
+        const postsWithDate = postsResponse.data.postList
+.        filter(post => post.date);
         setPosts(postsWithDate);
         // console.log(postsWithDate);
+
       } catch (error) {
         console.error("Error fetching user information", error);
       }
-    };
+    };    
     fetchOrnamentOrder();
   }, []);
 
@@ -115,9 +141,11 @@ function Tree() {
       <div className="page-bg">
         <div className="center">
           <div className="tree-content">
-            <div className="tree-header-box">
-              <Header />
-            </div>
+            {accessToken && (
+              <div className="tree-header-box">
+                <Header />
+              </div>
+            )}
             <div className="receiver">
               <p>To. {receiver}</p>
             </div>

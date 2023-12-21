@@ -32,6 +32,25 @@ function Main() {
   const [openedBoxes, setOpenedBoxes] = useState([]);
   const [ticketCount, setTicketCount] = useState(0);
 
+  const [userNickname, setUserNickname] = useState('');
+
+  useEffect(() => {
+    const fetchNickname = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/api/users/user-info", {
+            withCredentials: true,
+          });
+      
+          setUserNickname(response.data.nickname);
+          console.log(userNickname);
+          
+      } catch (error) {
+        console.error("Error fetching user information", error);
+      }
+    };
+    fetchNickname();
+  }, []);
+
   useEffect(() => {
     const getCurrentDate = () => {
       const date = new Date();
@@ -197,7 +216,7 @@ function Main() {
 
   // 페이지 간 이동 시에도 토큰을 전달하도록 navigate 함수 사용
   const handleTreeLink = () => {
-    navigate("/tree", { state: { accessToken, refreshToken } });
+    navigate(`/tree?nickname=${userNickname}`, { state: { accessToken, refreshToken } });
   };
 
   useEffect(() => {
