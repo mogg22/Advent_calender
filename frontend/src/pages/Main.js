@@ -37,7 +37,7 @@ function Main() {
   useEffect(() => {
     const fetchNickname = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/users/user-info", {
+        const response = await axios.get("https://totree-likelion.store/api/users/user-info", {
           withCredentials: true,
         });
 
@@ -64,7 +64,7 @@ function Main() {
   useEffect(() => {
     const fetchToken = async () => {
       try {
-        const responseRe = await axios.post("http://localhost:8080/api/users/reissue-token", {
+        const responseRe = await axios.post("https://totree-likelion.store/api/users/reissue-token", {
           withCredentials: true,
         });
 
@@ -86,7 +86,7 @@ function Main() {
           axios.defaults.headers.common["Authorization"] = `${tokenToUse}`;
         }
 
-        const response = await axios.get("http://localhost:8080/api/users/user-info", {
+        const response = await axios.get("https://totree-likelion.store/api/users/user-info", {
           withCredentials: true,
         });
 
@@ -102,7 +102,7 @@ function Main() {
   useEffect(() => {
     const fetchApiDates = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/users/readposts", {
+        const response = await axios.get("https://totree-likelion.store/api/users/readposts", {
           withCredentials: true,
         });
 
@@ -123,7 +123,7 @@ function Main() {
           return;
         }
 
-        const response = await axios.get("http://localhost:8080/api/users/user-info", {
+        const response = await axios.get("https://totree-likelion.store/api/users/user-info", {
           withCredentials: true,
         });
 

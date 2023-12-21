@@ -19,7 +19,7 @@ function Header({ MyticketCount, updateHeaderTicketCount }) {
     const fetchUserInfo = async () => {
       try {
         // 유저 정보 가져오기 API 호출
-        const response = await axios.get("http://localhost:8080/api/users/user-info");
+        const response = await axios.get("https://totree-likelion.store/api/users/user-info");
         const userTicketCount = response.data.ticket; // 티켓 개수 추출
         setTicketCount(MyticketCount);
         updateHeaderTicketCount(userTicketCount);

@@ -29,7 +29,7 @@ function Mypage() {
   useEffect(() => {
     const fetchNickname = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/users/user-info", {
+        const response = await axios.get("https://totree-likelion.store/api/users/user-info", {
           withCredentials: true,
         });
 
@@ -54,7 +54,7 @@ function Mypage() {
 
   const newReceive = async () => {
     try {
-      const response = await axios.patch("http://localhost:8080/api/users/update-receiver", formData, {
+      const response = await axios.patch("https://totree-likelion.store/api/users/update-receiver", formData, {
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",
@@ -88,7 +88,7 @@ function Mypage() {
   // 티켓 1개 발급
   const handleGetTicket = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/users/get-ticket", {
+      const response = await axios.get("https://totree-likelion.store/api/users/get-ticket", {
         withCredentials: true,
       });
 
@@ -111,7 +111,7 @@ function Mypage() {
   // 티켓 2개 발급
   const handleGetTicket2 = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/users/get-double-ticket", {
+      const response = await axios.get("https://totree-likelion.store/api/users/get-double-ticket", {
         withCredentials: true,
       });
 
