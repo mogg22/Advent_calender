@@ -15,19 +15,24 @@ function Mypage() {
   const [ticketGet, setTicketGet] = useState(0);
   const [ticketGet2, setTicketGet2] = useState(0);
   const [nickname, setNickname] = useState("");
+  const [ticketCount, setTicketCount] = useState(0);
 
   const location = useLocation();
   const { accessToken } = location.state || { accessToken: null };
   const { refreshToken } = location.state || { refreshToken: null };
 
+  const updateHeaderTicketCount = (newTicketCount) => {
+    setTicketCount(newTicketCount);
+  };
+
   //닉네임 불러오기
   useEffect(() => {
     const fetchNickname = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/users/user-info", {
-            withCredentials: true,
+        const response = await axios.get("https://totree-likelion.store/api/users/user-info", {
+          withCredentials: true,
         });
-  
+
         setNickname(response.data.nickname);
       } catch (error) {
         console.error("Error fetching user information", error);
@@ -39,7 +44,7 @@ function Mypage() {
 
   //받는이 변경
   const [formData, setFormData] = useState({
-    newReceiver: ""
+    newReceiver: "",
   });
 
   const handleInputChange = (e) => {
@@ -49,15 +54,12 @@ function Mypage() {
 
   const newReceive = async () => {
     try {
-      const response = await axios.patch(
-        "http://localhost:8080/api/users/update-receiver", formData,
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
+      const response = await axios.patch("https://totree-likelion.store/api/users/update-receiver", formData, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
         },
-        }
-      );
+      });
 
       if (response.status === 200) {
         // Handle successful receiver update
@@ -83,22 +85,20 @@ function Mypage() {
     setAuthorizationHeader();
   }, []);
 
-// 티켓 1개 발급
+  // 티켓 1개 발급
   const handleGetTicket = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:8080/api/users/get-ticket",
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.get("https://totree-likelion.store/api/users/get-ticket", {
+        withCredentials: true,
+      });
 
       setTicketGet(response.data.ticket);
-      navigate("/mypage", { state: { accessToken, refreshToken } });
+      setTicketCount(response.data.ticket);
 
       if (response.status === 200) {
         // Handle successful ticket issuance
         console.log("Ticket issued successfully");
+        updateHeaderTicketCount(response.data.ticket);
       } else {
         // Handle ticket issuance failure
         console.error("Error issuing ticket");
@@ -111,19 +111,17 @@ function Mypage() {
   // 티켓 2개 발급
   const handleGetTicket2 = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:8080/api/users/get-double-ticket",
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.get("https://totree-likelion.store/api/users/get-double-ticket", {
+        withCredentials: true,
+      });
 
       setTicketGet2(response.data.ticket);
-      navigate("/mypage", { state: { accessToken, refreshToken } });
+      setTicketCount(response.data.ticket);
 
       if (response.status === 200) {
         // Handle successful ticket issuance
         console.log("Ticket issued successfully");
+        updateHeaderTicketCount(response.data.ticket);
       } else {
         // Handle ticket issuance failure
         console.error("Error issuing ticket");
@@ -133,13 +131,12 @@ function Mypage() {
     }
   };
 
-
   return (
     <div className="my-page">
       <div className="page-bg">
         <div className="center">
           <div className="mypages">
-            <Header />
+            <Header MyticketCount={ticketCount} updateHeaderTicketCount={updateHeaderTicketCount} />
             <div className="mypage-content">
               <div className="mypage-title">
                 <img src={Title} />
@@ -156,8 +153,12 @@ function Mypage() {
                 <img src={Info} alt="이용권설명" />
               </div>
               <div className="ticket">
-                <div onClick={handleGetTicket}><img src={Oneticket} alt="1장구매" /></div>
-                <div onClick={handleGetTicket2}><img src={Twoticket} alt="2장구매" /></div>
+                <div onClick={handleGetTicket}>
+                  <img src={Oneticket} alt="1장구매" />
+                </div>
+                <div onClick={handleGetTicket2}>
+                  <img src={Twoticket} alt="2장구매" />
+                </div>
               </div>
               <div className="tosend">
                 <p>누구에게 트리를 보낼까요?</p>
@@ -165,7 +166,7 @@ function Mypage() {
               </div>
               <div className="submit">
                 <div className="submit" onClick={newReceive}>
-                <p>수정하기</p>
+                  <p>수정하기</p>
                 </div>
               </div>
             </div>

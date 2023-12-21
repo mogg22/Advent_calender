@@ -19,7 +19,7 @@ function Main_Header() {
     const fetchUserInfo = async () => {
       try {
         // 유저 정보 가져오기 API 호출
-        const response = await axios.get("http://localhost:8080/api/users/user-info");
+        const response = await axios.get("https://totree-likelion.store/api/users/user-info");
         const userTicketCount = response.data.ticket; // 티켓 개수 추출
         setTicketCount(userTicketCount);
       } catch (error) {
@@ -33,7 +33,7 @@ function Main_Header() {
   const handleLogout = async () => {
     try {
       // 로그아웃 API 호출
-      await axios.delete("http://localhost:8080/api/users/logout");
+      await axios.delete("https://totree-likelion.store/api/users/logout");
       console.log("User logout is successful");
 
       // Clear authentication tokens from local storage

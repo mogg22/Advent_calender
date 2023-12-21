@@ -30,7 +30,7 @@ function Tree() {
   const location = useLocation();
 
   const searchParams = new URLSearchParams(location.search);
-  const nicknameParam = searchParams.get('nickname');
+  const nicknameParam = searchParams.get("nickname");
 
   useEffect(() => {
     if (nicknameParam) {
@@ -38,33 +38,32 @@ function Tree() {
       // 여기서 필요한 작업을 수행하면 됩니다.
     }
   }, [location.search]);
-  
+
   const { accessToken } = location.state || { accessToken: null };
   const { refreshToken } = location.state || { refreshToken: null };
 
   useEffect(() => {
     const fetchOrnamentOrder = async () => {
       try {
-
         let postsResponse;
 
         if (accessToken) {
           // 토큰 있을 때
           console.log("토큰 있을 때");
-          const response = await axios.get("http://localhost:8080/api/users/user-info", {
+          const response = await axios.get("https://totree-likelion.store/api/users/user-info", {
             withCredentials: true,
           });
-      
+
           setOrnamentOrder(response.data.ornament);
           setReceiver(response.data.receiver);
 
-          postsResponse = await axios.get("http://localhost:8080/api/users/readposts", {
+          postsResponse = await axios.get("https://totree-likelion.store/api/users/readposts", {
             withCredentials: true,
           });
         } else {
           // 토큰 없을 때
           console.log("토큰 없을 때");
-          postsResponse = await axios.get(`http://localhost:8080/api/users/readposts/${nicknameParam}`, {
+          postsResponse = await axios.get(`https://totree-likelion.store/api/users/readposts/${nicknameParam}`, {
             withCredentials: true,
           });
           // console.log(postsResponse.data);
@@ -72,21 +71,18 @@ function Tree() {
           setReceiver(postsResponse.data.receiver);
         }
         // date 속성이 있는 게시물을 필터링
-        if (accessToken){
-          const postsWithDate = postsResponse.data
-.         filter(post => post.date);
+        if (accessToken) {
+          const postsWithDate = postsResponse.data.filter((post) => post.date);
           setPosts(postsWithDate);
         } else {
-          const postsWithDate = postsResponse.data.postList
-.        filter(post => post.date);
+          const postsWithDate = postsResponse.data.postList.filter((post) => post.date);
           setPosts(postsWithDate);
         }
         // console.log(postsWithDate);
-
       } catch (error) {
         console.error("Error fetching user information", error);
       }
-    };    
+    };
     fetchOrnamentOrder();
   }, []);
 
