@@ -16,7 +16,7 @@ function TreePost() {
         if (imageQuery) {
             const imageIndex = parseInt(imageQuery[0], 10);
             setImage(imageIndex);
-            console.log(imageIndex);
+            // console.log(imageIndex);
         }
 
         if (location.state && location.state.content) {
