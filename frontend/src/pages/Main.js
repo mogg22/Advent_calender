@@ -32,18 +32,17 @@ function Main() {
   const [openedBoxes, setOpenedBoxes] = useState([]);
   const [ticketCount, setTicketCount] = useState(0);
 
-  const [userNickname, setUserNickname] = useState('');
+  const [userNickname, setUserNickname] = useState("");
 
   useEffect(() => {
     const fetchNickname = async () => {
       try {
         const response = await axios.get("http://localhost:8080/api/users/user-info", {
-            withCredentials: true,
-          });
-      
-          setUserNickname(response.data.nickname);
-          console.log(userNickname);
-          
+          withCredentials: true,
+        });
+
+        setUserNickname(response.data.nickname);
+        // console.log(userNickname);
       } catch (error) {
         console.error("Error fetching user information", error);
       }
