@@ -37,7 +37,7 @@ function Header() {
     <div className="Header">
       <div className="hd-img">
         <div className="setting-ticket">
-          <img src={back} alt="뒤로가기" onClick={handleMainLink} />
+          <img src={back} alt="뒤로가기" onClick={handleMainLink} style={{ cursor: "pointer" }}/>
           <div className="ticket-box">
             <div className="ticket-img">
               <img src={ticket} alt="티켓" />

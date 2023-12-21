@@ -21,7 +21,7 @@ function Plus({ image, content }) {
   const dynamicImageIndex = currentUrlNumber === 24 ? 25 : image;
 
   // console.log(currentUrlNumber);
-  console.log(dynamicImageIndex);
+  // console.log(dynamicImageIndex);
 
   return (
     <div

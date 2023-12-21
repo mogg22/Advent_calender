@@ -64,7 +64,10 @@ function Tree() {
       const ornamentIndex = ornamentOrder[post.date - 1];
       // console.log(post.date);
       // console.log(ornamentIndex);
-      dateOrnaments.push(<Plus key={index} image={ornamentIndex} isVisible={true} content={post.content} />);
+      if (post.date !== 25) {
+        const ornamentIndex = ornamentOrder[post.date - 1];
+        dateOrnaments.push(<Plus key={index} image={ornamentIndex} isVisible={true} content={post.content} />);
+      }
     });
     return dateOrnaments;
   };

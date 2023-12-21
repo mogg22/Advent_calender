@@ -132,7 +132,7 @@ function Post() {
                   </div>
                   <input type="hidden" name="currentDate" value={getCurrentDate()} />
                   <div className="submit-btn">
-                    <button onClick={handleSubmit}>담기</button>
+                    <button onClick={handleSubmit} style={{ cursor: "pointer" }}>담기</button>
                   </div>
                 </div>
               </div>
