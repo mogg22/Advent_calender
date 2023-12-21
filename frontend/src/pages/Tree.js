@@ -72,9 +72,15 @@ function Tree() {
           setReceiver(postsResponse.data.receiver);
         }
         // date 속성이 있는 게시물을 필터링
-        const postsWithDate = postsResponse.data.postList
+        if (accessToken){
+          const postsWithDate = postsResponse.data
+.         filter(post => post.date);
+          setPosts(postsWithDate);
+        } else {
+          const postsWithDate = postsResponse.data.postList
 .        filter(post => post.date);
-        setPosts(postsWithDate);
+          setPosts(postsWithDate);
+        }
         // console.log(postsWithDate);
 
       } catch (error) {
