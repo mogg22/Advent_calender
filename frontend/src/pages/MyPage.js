@@ -1,5 +1,6 @@
 // import Other_Header from "../components/Other_Header";
 import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import "../styles/Mypage.css";
 import Header from "../components/Other_Header";
@@ -10,11 +11,35 @@ import Oneticket from "../img/one-ticket.png";
 import Twoticket from "../img/two-ticket.png";
 
 function Mypage() {
+  const navigate = useNavigate();
+  const [ticketGet, setTicketGet] = useState(0);
+  const [ticketGet2, setTicketGet2] = useState(0);
+  const [nickname, setNickname] = useState("");
+
+  const location = useLocation();
+  const { accessToken } = location.state || { accessToken: null };
+  const { refreshToken } = location.state || { refreshToken: null };
+
+  //닉네임 불러오기
+  useEffect(() => {
+    const fetchNickname = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/api/users/user-info", {
+            withCredentials: true,
+        });
+  
+        setNickname(response.data.nickname);
+      } catch (error) {
+        console.error("Error fetching user information", error);
+      }
+    };
+
+    fetchNickname();
+  }, []);
+
+  //받는이 변경
   const [formData, setFormData] = useState({
-    nickname: "",
-    password: "",
-    password2: "",
-    receiver: "",
+    newReceiver: ""
   });
 
   const handleInputChange = (e) => {
@@ -22,24 +47,28 @@ function Mypage() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSignUp = async () => {
+  const newReceive = async () => {
     try {
-      const response = await axios.post("http://localhost:8080/api/users/signup", formData, {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json",
+      const response = await axios.patch(
+        "http://localhost:8080/api/users/update-receiver", formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
         },
-      });
+        }
+      );
 
       if (response.status === 200) {
-        // Handle successful registration
-        console.log("User registered successfully");
+        // Handle successful receiver update
+        console.log("Receiver updated successfully");
+        // Optionally, you can update the local state or perform additional actions.
       } else {
-        // Handle registration failure
-        console.error("Error registering user");
+        // Handle receiver update failure
+        console.error("Error updating receiver");
       }
     } catch (error) {
-      console.error("Error registering user", error);
+      console.error("Error updating receiver", error);
     }
   };
 
@@ -53,6 +82,57 @@ function Mypage() {
 
     setAuthorizationHeader();
   }, []);
+
+// 티켓 1개 발급
+  const handleGetTicket = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/api/users/get-ticket",
+        {
+          withCredentials: true,
+        }
+      );
+
+      setTicketGet(response.data.ticket);
+      navigate("/mypage", { state: { accessToken, refreshToken } });
+
+      if (response.status === 200) {
+        // Handle successful ticket issuance
+        console.log("Ticket issued successfully");
+      } else {
+        // Handle ticket issuance failure
+        console.error("Error issuing ticket");
+      }
+    } catch (error) {
+      console.error("Error issuing ticket", error);
+    }
+  };
+
+  // 티켓 2개 발급
+  const handleGetTicket2 = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/api/users/get-double-ticket",
+        {
+          withCredentials: true,
+        }
+      );
+
+      setTicketGet2(response.data.ticket);
+      navigate("/mypage", { state: { accessToken, refreshToken } });
+
+      if (response.status === 200) {
+        // Handle successful ticket issuance
+        console.log("Ticket issued successfully");
+      } else {
+        // Handle ticket issuance failure
+        console.error("Error issuing ticket");
+      }
+    } catch (error) {
+      console.error("Error issuing ticket", error);
+    }
+  };
+
 
   return (
     <div className="my-page">
@@ -68,9 +148,7 @@ function Mypage() {
                 <div className="profile">
                   <img src={Profile} />
                 </div>
-                <p>username123</p>
-                {/* <input className="blank" type="text" name="nickname"/> */}
-                {/* <input className="blank" type="text" name="nickname" onChange={handleInputChange} /> */}
+                <p>{nickname}</p>
               </div>
 
               <div className="pay">
@@ -78,17 +156,17 @@ function Mypage() {
                 <img src={Info} alt="이용권설명" />
               </div>
               <div className="ticket">
-                <img src={Oneticket} alt="1장구매" />
-                <img src={Twoticket} alt="2장구매" />
+                <div onClick={handleGetTicket}><img src={Oneticket} alt="1장구매" /></div>
+                <div onClick={handleGetTicket2}><img src={Twoticket} alt="2장구매" /></div>
               </div>
               <div className="tosend">
                 <p>누구에게 트리를 보낼까요?</p>
-                <input className="m-blank" type="text" name="receiver" placeholder="받는 사람 변경" />
-                {/* <input className="blank" type="text" name="receiver" onChange={handleInputChange} /> */}
+                <input className="m-blank" type="text" name="newReceiver" placeholder="받는 사람 변경" onChange={handleInputChange} />
               </div>
               <div className="submit">
-                {/* <div className="submit" onClick={handleSignUp}> */}
+                <div className="submit" onClick={newReceive}>
                 <p>수정하기</p>
+                </div>
               </div>
             </div>
           </div>
