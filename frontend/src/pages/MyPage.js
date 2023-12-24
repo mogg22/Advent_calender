@@ -1,6 +1,6 @@
 // import Other_Header from "../components/Other_Header";
 import React, { useState } from "react";
-// import axios from "axios";
+import axios from "axios";
 import "../styles/Mypage.css";
 import Header from "../components/Other_Header";
 import Title from "../img/title.png";
@@ -59,7 +59,7 @@ function Register() {
             </div>
             <div className="password">
               <p>비밀번호 변경</p>
-              <input className="blank" type="password" name="password"/>
+              <input className="blank" type="password" name="password" />
               {/* <input className="blank" type="password" name="password" onChange={handleInputChange} /> */}
             </div>
             <div className="check">
@@ -73,7 +73,7 @@ function Register() {
               {/* <input className="blank" type="text" name="receiver" onChange={handleInputChange} /> */}
             </div>
             <div className="submit">
-            {/* <div className="submit" onClick={handleSignUp}> */}
+              {/* <div className="submit" onClick={handleSignUp}> */}
               <p>수정하기</p>
             </div>
           </div>

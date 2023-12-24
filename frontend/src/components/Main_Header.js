@@ -13,6 +13,7 @@ function Main_Header() {
 
   const location = useLocation();
   const { accessToken } = location.state || { accessToken: null };
+  const { refreshToken } = location.state || { refreshToken: null };
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -37,6 +38,7 @@ function Main_Header() {
 
       // Clear authentication tokens from local storage
       localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
 
       // Reset Authorization header
       delete axios.defaults.headers.common["Authorization"];
@@ -49,14 +51,14 @@ function Main_Header() {
   };
 
   const handleMypageLink = () => {
-    navigate("/mypage", { state: { accessToken } });
+    navigate("/mypage", { state: { accessToken, refreshToken } });
   };
 
   return (
     <div className="Header">
       <div className="hd-img">
         <div className="setting-ticket">
-          <img src={setting} alt="설정" onClick={handleMypageLink} style={{cursor: "pointer",}}/>
+          <img src={setting} alt="설정" onClick={handleMypageLink} style={{ cursor: "pointer" }} />
           <div className="ticket-box">
             <div className="ticket-img">
               <img src={ticket} alt="티켓" />
@@ -64,7 +66,7 @@ function Main_Header() {
             <p>{ticketCount}</p>
           </div>
         </div>
-        <img src={logout} alt="로그아웃" onClick={handleLogout} style={{cursor: "pointer",}}/>
+        <img src={logout} alt="로그아웃" onClick={handleLogout} style={{ cursor: "pointer" }} />
       </div>
     </div>
   );
